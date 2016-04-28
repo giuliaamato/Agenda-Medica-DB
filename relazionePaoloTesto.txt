@@ -1,0 +1,13 @@
+Paolo Broglio
+Giulia Amato
+
+Relazione Progetto Base di Dati
+
+
+Abstract
+
+In una ASL (Associazione Sanitaria Locale) ogni medico ha bisogno di organizzare le visite mediche che deve effettuare tramite un’apposita agenda. L’agenda medica tiene traccia delle visite eseguite e di quelle da eseguire da parte del medico; si tenga conto del fatto che ogni visita è assegnata ad un certo medico dal CUP (Centro Unico di Prenotazione) e se lui decide di accettarla allora diventa a tutti gli effetti una nuova visita presente nell’agenda. È necessario considerare l’eventualità in cui è il medico stesso a dover aggiungere una nuova visita all’elenco presente nella sua agenda. 
+Ogni visita medica può essere un controllo di routine oppure una visita a tutti gli effetti, dove viene prodotto un referto contenente il riassunto dell’esito della visita. Considerare l’eventualità in cui il referto potrebbe non essere stato ancora prodotto. Inoltre ogni visita ha un codice di priorità (U, D, B, …) che comporta un diverso ordinamento delle visite all’interno dell’agenda. Ad ogni visita corrisponde un dottore che la esegue, un paziente e un infermiere che assiste.
+Un paziente è identificato tramite le sue generalità, incluso il Codice Fiscale e inoltre possiede un codice esenzione. In più ogni paziente afferisce ad una sola ASL ma ci sono eventualità in cui può cambiare (trasloco->nuova residenza).
+Un medico oltre alle sue generalità ha anche una specializzazione.
+Per quanto riguarda l’amministrazione, di cui fanno parte CUP e Dirigenti, è necessario consentire a quest’ultimi la possibilità di licenziare e assumere dottori e infermieri, oltre a poter gestire i pazienti che afferiscono ad una certa ASL.
