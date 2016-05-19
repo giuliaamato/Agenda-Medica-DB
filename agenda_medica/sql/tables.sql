@@ -19,7 +19,7 @@ DROP TABLE IF EXISTS VisitaMedica;
 # CREATE TABLES
 CREATE TABLE Informazioni (
 
-	CodiceFiscale  VARCHAR(16) NOT NULL,
+	CodiceFiscale  VARCHAR(16) NOT NULL PRIMARY KEY,
 	DataNascita    DATE NOT NULL,
 	Nome 		   VARCHAR(20) NOT NULL,
 	Cognome		   VARCHAR(20) NOT NULL,
@@ -30,31 +30,31 @@ CREATE TABLE Informazioni (
 	Indirizzo	   VARCHAR(45) NOT NULL,
 	CodiceASL 	   INT NOT NULL,
 
-	PRIMARY KEY(CodiceFiscale),
+	FOREIGN KEY (CittaResidenza) REFERENCES Citta(Nome),
+	FOREIGN KEY (CittaNascita) REFERENCES Citta(Nome),
+	FOREIGN KEY (CodiceASL) REFERENCES ASL(Codice)
 
 ) ENGINE=INNODB;
 
 CREATE TABLE Citta (
 
-	Nome 	  VARCHAR(45) NOT NULL,
+	Nome 	  VARCHAR(45) NOT NULL PRIMARY KEY,
 	Provincia VARCHAR(2) NOT NULL,
 	CAP		  VARCHAR(5) NOT NULL,
 	Regione   VARCHAR(15) NOT NULL,
-
-	PRIMARY KEY(Nome)
 
 
 )ENGINE=INNODB;
 
 CREATE TABLE ASL (
 
-	Codice    INT NOT NULL,
+	Codice    INT NOT NULL PRIMARY KEY,
 	Indirizzo VARCHAR(45) NOT NULL,
 	Email     VARCHAR(45) NOT NULL,
 	Telefono  VARCHAR(20) NOT NULL,
 	CittaSede VARCHAR(45) NOT NULL,
 
-	PRIMARY KEY(Codice)
+	FOREIGN KEY (Codice) REFERENCES Citta(Nome)
 
 
 )ENGINE=INNODB; 
@@ -62,30 +62,41 @@ CREATE TABLE ASL (
 
 CREATE TABLE CUP (
 
-	Codice INT NOT NULL,
+	Codice INT NOT NULL PRIMARY KEY,
 	Password VARCHAR(10),
-	ASL INT NOT NULL,
+	CodiceASL INT NOT NULL,
 
-	PRIMARY KEY (Codice)
+	FOREIGN KEY (CodiceASL) REFERENCES ASL(Codice)
 
 
 ) ENGINE=INNODB;
 
+
+CREATE TABLE DatiAccesso (
+
+	NomeUtente VARCHAR(20) NOT NULL PRIMARY KEY,
+	Password VARCHAR(20) NOT NULL,
+	DataScadenza DATE NOT NULL,
+
+)ENGINE=INNODB;
+
+
 CREATE TABLE Admin (
 
 	CodiceFiscale VARCHAR(16) NOT NULL,
-	Password VARCHAR(10) NOT NULL,
-	NomeUtente VARCHAR(45) NOT NULL,
+	NomeUtente VARCHAR(20) NOT NULL,
 	Stipendio SMALLINT NOT NULL,
 
-	PRIMARY KEY (CodiceFiscale)
+	PRIMARY KEY (CodiceFiscale,NomeUtente),
+
+	FOREIGN KEY (CodiceFiscale) REFERENCES Informazioni(CodiceFiscale),
+	FOREIGN KEY (NomeUtente) REFERENCES DatiAccesso(NomeUtente)
 
 ) ENGINE=INNODB;
 
 CREATE TABLE Dottore (
 
 	CodiceFiscale VARCHAR(16) NOT NULL,
-	Password VARCHAR(10) NOT NULL,
 	NomeUtente VARCHAR(10) NOT NULL,
 	Stipendio SMALLINT NOT NULL,
 	Specializzazione VARCHAR(30) NOT NULL,
@@ -94,35 +105,38 @@ CREATE TABLE Dottore (
 	Disponibile BOOL NOT NULL,
 	Stipendio SMALLINT NOT NULL,
 
-	PRIMARY KEY (CodiceFiscale)
+	PRIMARY KEY (CodiceFiscale,NomeUtente),
+
+	FOREIGN KEY (NomeUtente) REFERENCES DatiAccesso(NomeUtente),
+	FOREIGN KEY (CodiceFiscale) REFERENCES Informazioni(CodiceFiscale)
 
 
 ) ENGINE=INNODB;
 
 CREATE TABLE Paziente (
 
-	CodiceFiscale VARCHAR(16) NOT NULL,
+	CodiceFiscale VARCHAR(16) NOT NULL PRIMARY KEY,
 	CodiceEsenzione VARCHAR(3),
 
-	PRIMARY KEY (CodiceFiscale)
+	FOREIGN KEY (CodiceFiscale) REFERENCES Informazioni(CodiceFiscale)
 
 
 ) ENGINE=INNODB;
 
 CREATE TABLE Infermiere (
 
-	CodiceFiscale VARCHAR(16) NOT NULL,
+	CodiceFiscale VARCHAR(16) NOT NULL PRIMARY KEY,
 	Stipendio SMALLINT NOT NULL,
 	Tirocinante BOOL NOT NULL,
 
-	PRIMARY KEY (CodiceFiscale)
+	FOREIGN KEY (CodiceFiscale) REFERENCES Informazioni(CodiceFiscale)
 
 )ENGINE=INNODB;
 
 
 CREATE TABLE VisitaMedica (
 
-	CodiceVisita INT NOT NULL,
+	CodiceVisita INT NOT NULL PRIMARY KEY,
 	Data DATETIME NOT NULL,
 	Ambulatorio VARCHAR(25) NOT NULL,
 	TipoVisita VARCHAR(15) NOT NULL,
@@ -133,16 +147,18 @@ CREATE TABLE VisitaMedica (
 	CFPaziente VARCHAR(16) NOT NULL,
 	CodiceReferto INT,
 
-	PRIMARY KEY (CodiceVisita)
+	FOREIGN KEY (CFDottore) REFERENCES Dottore(CodiceFiscale),
+	FOREIGN KEY (CFInfermiere) REFERENCES Infermiere(CodiceFiscale),
+	FOREIGN KEY (CFPaziente) REFERENCES Paziente(CodiceFiscale),
+	FOREIGN KEY (CodiceReferto) REFERENCES Referto(Codice)
 
 ) ENGINE=INNODB;
 
 CREATE TABLE Referto (
 
-	Codice INT NOT NULL,
+	Codice INT NOT NULL PRIMARY KEY,
 	Contenuto LONGTEXT NOT NULL,
 
-	PRIMARY KEY (Codice)
 
 )ENGINE=INNODB;
 
