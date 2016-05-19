@@ -1,0 +1,148 @@
+SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
+SET FOREIGN_KEY_CHECKS=0;
+
+# DROP TABLES
+DROP TABLE IF EXISTS Informazioni;
+DROP TABLE IF EXISTS Citta;
+DROP TABLE IF EXISTS ASL;
+DROP TABLE IF EXISTS CUP;
+DROP TABLE IF EXISTS Admin;
+DROP TABLE IF EXISTS Dottore;
+DROP TABLE IF EXISTS Paziente;
+DROP TABLE IF EXISTS Infermiere;
+DROP TABLE IF EXISTS Referto;
+DROP TABLE IF EXISTS VisitaMedica;
+
+
+
+
+# CREATE TABLES
+CREATE TABLE Informazioni (
+
+	CodiceFiscale  VARCHAR(16) NOT NULL,
+	DataNascita    DATE NOT NULL,
+	Nome 		   VARCHAR(20) NOT NULL,
+	Cognome		   VARCHAR(20) NOT NULL,
+	Email		   VARCHAR(45),
+	Telefono	   VARCHAR(20) NOT NULL,
+	CittaResidenza VARCHAR(45) NOT NULL,
+	CittaNascita   VARCHAR(45) NOT NULL,
+	Indirizzo	   VARCHAR(45) NOT NULL,
+	CodiceASL 	   INT NOT NULL,
+
+	PRIMARY KEY(CodiceFiscale),
+
+) ENGINE=INNODB;
+
+CREATE TABLE Citta (
+
+	Nome 	  VARCHAR(45) NOT NULL,
+	Provincia VARCHAR(2) NOT NULL,
+	CAP		  VARCHAR(5) NOT NULL,
+	Regione   VARCHAR(15) NOT NULL,
+
+	PRIMARY KEY(Nome)
+
+
+)ENGINE=INNODB;
+
+CREATE TABLE ASL (
+
+	Codice    INT NOT NULL,
+	Indirizzo VARCHAR(45) NOT NULL,
+	Email     VARCHAR(45) NOT NULL,
+	Telefono  VARCHAR(20) NOT NULL,
+	CittaSede VARCHAR(45) NOT NULL,
+
+	PRIMARY KEY(Codice)
+
+
+)ENGINE=INNODB; 
+
+
+CREATE TABLE CUP (
+
+	Codice INT NOT NULL,
+	Password VARCHAR(10),
+	ASL INT NOT NULL,
+
+	PRIMARY KEY (Codice)
+
+
+) ENGINE=INNODB;
+
+CREATE TABLE Admin (
+
+	CodiceFiscale VARCHAR(16) NOT NULL,
+	Password VARCHAR(10) NOT NULL,
+	NomeUtente VARCHAR(45) NOT NULL,
+	Stipendio SMALLINT NOT NULL,
+
+	PRIMARY KEY (CodiceFiscale)
+
+) ENGINE=INNODB;
+
+CREATE TABLE Dottore (
+
+	CodiceFiscale VARCHAR(16) NOT NULL,
+	Password VARCHAR(10) NOT NULL,
+	NomeUtente VARCHAR(10) NOT NULL,
+	Stipendio SMALLINT NOT NULL,
+	Specializzazione VARCHAR(30) NOT NULL,
+	OraInizio TIME NOT NULL,
+	OraFine TIME NOT NULL,
+	Disponibile BOOL NOT NULL,
+	Stipendio SMALLINT NOT NULL,
+
+	PRIMARY KEY (CodiceFiscale)
+
+
+) ENGINE=INNODB;
+
+CREATE TABLE Paziente (
+
+	CodiceFiscale VARCHAR(16) NOT NULL,
+	CodiceEsenzione VARCHAR(3),
+
+	PRIMARY KEY (CodiceFiscale)
+
+
+) ENGINE=INNODB;
+
+CREATE TABLE Infermiere (
+
+	CodiceFiscale VARCHAR(16) NOT NULL,
+	Stipendio SMALLINT NOT NULL,
+	Tirocinante BOOL NOT NULL,
+
+	PRIMARY KEY (CodiceFiscale)
+
+)ENGINE=INNODB;
+
+
+CREATE TABLE VisitaMedica (
+
+	CodiceVisita INT NOT NULL,
+	Data DATETIME NOT NULL,
+	Ambulatorio VARCHAR(25) NOT NULL,
+	TipoVisita VARCHAR(15) NOT NULL,
+	TipoPrenotazione VARCHAR(15) NOT NULL,
+	Priorita CHAR,
+	CFDottore VARCHAR(16),
+	CFInfermiere VARCHAR(16),
+	CFPaziente VARCHAR(16) NOT NULL,
+	CodiceReferto INT,
+
+	PRIMARY KEY (CodiceVisita)
+
+) ENGINE=INNODB;
+
+CREATE TABLE Referto (
+
+	Codice INT NOT NULL,
+	Contenuto LONGTEXT NOT NULL,
+
+	PRIMARY KEY (Codice)
+
+)ENGINE=INNODB;
+
