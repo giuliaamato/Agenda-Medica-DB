@@ -12,6 +12,7 @@ DROP TABLE IF EXISTS Paziente;
 DROP TABLE IF EXISTS Infermiere;
 DROP TABLE IF EXISTS Referto;
 DROP TABLE IF EXISTS VisitaMedica;
+DROP TABLE IF EXISTS DatiAccesso;
 
 
 
@@ -30,9 +31,12 @@ CREATE TABLE Informazioni (
 	Indirizzo	   VARCHAR(45) NOT NULL,
 	CodiceASL 	   INT NOT NULL,
 
-	FOREIGN KEY (CittaResidenza) REFERENCES Citta(Nome),
-	FOREIGN KEY (CittaNascita) REFERENCES Citta(Nome),
-	FOREIGN KEY (CodiceASL) REFERENCES ASL(Codice)
+	FOREIGN KEY (CittaResidenza) REFERENCES Citta(Nome) 
+		ON DELETE NO ACTION,
+	FOREIGN KEY (CittaNascita) REFERENCES Citta(Nome) 
+		ON DELETE NO ACTION,
+	FOREIGN KEY (CodiceASL) REFERENCES ASL(Codice) 
+		ON DELETE NO ACTION
 
 ) ENGINE=INNODB;
 
@@ -41,7 +45,7 @@ CREATE TABLE Citta (
 	Nome 	  VARCHAR(45) NOT NULL PRIMARY KEY,
 	Provincia VARCHAR(2) NOT NULL,
 	CAP		  VARCHAR(5) NOT NULL,
-	Regione   VARCHAR(15) NOT NULL,
+	Regione   VARCHAR(15) NOT NULL
 
 
 )ENGINE=INNODB;
@@ -54,7 +58,7 @@ CREATE TABLE ASL (
 	Telefono  VARCHAR(20) NOT NULL,
 	CittaSede VARCHAR(45) NOT NULL,
 
-	FOREIGN KEY (Codice) REFERENCES Citta(Nome)
+	FOREIGN KEY (CittaSede) REFERENCES Citta(Nome)
 
 
 )ENGINE=INNODB; 
@@ -66,7 +70,8 @@ CREATE TABLE CUP (
 	Password VARCHAR(10),
 	CodiceASL INT NOT NULL,
 
-	FOREIGN KEY (CodiceASL) REFERENCES ASL(Codice)
+	FOREIGN KEY (CodiceASL) REFERENCES ASL(Codice) 
+		ON DELETE NO ACTION
 
 
 ) ENGINE=INNODB;
@@ -76,7 +81,7 @@ CREATE TABLE DatiAccesso (
 
 	NomeUtente VARCHAR(20) NOT NULL PRIMARY KEY,
 	Password VARCHAR(20) NOT NULL,
-	DataScadenza DATE NOT NULL,
+	DataScadenza DATE NOT NULL
 
 )ENGINE=INNODB;
 
@@ -89,8 +94,10 @@ CREATE TABLE Admin (
 
 	PRIMARY KEY (CodiceFiscale,NomeUtente),
 
-	FOREIGN KEY (CodiceFiscale) REFERENCES Informazioni(CodiceFiscale),
+	FOREIGN KEY (CodiceFiscale) REFERENCES Informazioni(CodiceFiscale)
+		ON DELETE CASCADE,
 	FOREIGN KEY (NomeUtente) REFERENCES DatiAccesso(NomeUtente)
+		ON DELETE CASCADE
 
 ) ENGINE=INNODB;
 
@@ -103,12 +110,13 @@ CREATE TABLE Dottore (
 	OraInizio TIME NOT NULL,
 	OraFine TIME NOT NULL,
 	Disponibile BOOL NOT NULL,
-	Stipendio SMALLINT NOT NULL,
 
 	PRIMARY KEY (CodiceFiscale,NomeUtente),
 
-	FOREIGN KEY (NomeUtente) REFERENCES DatiAccesso(NomeUtente),
+	FOREIGN KEY (NomeUtente) REFERENCES DatiAccesso(NomeUtente)
+		ON DELETE CASCADE,
 	FOREIGN KEY (CodiceFiscale) REFERENCES Informazioni(CodiceFiscale)
+		ON DELETE CASCADE
 
 
 ) ENGINE=INNODB;
@@ -119,6 +127,7 @@ CREATE TABLE Paziente (
 	CodiceEsenzione VARCHAR(3),
 
 	FOREIGN KEY (CodiceFiscale) REFERENCES Informazioni(CodiceFiscale)
+		ON DELETE CASCADE
 
 
 ) ENGINE=INNODB;
@@ -130,6 +139,7 @@ CREATE TABLE Infermiere (
 	Tirocinante BOOL NOT NULL,
 
 	FOREIGN KEY (CodiceFiscale) REFERENCES Informazioni(CodiceFiscale)
+		ON DELETE CASCADE
 
 )ENGINE=INNODB;
 
@@ -147,17 +157,21 @@ CREATE TABLE VisitaMedica (
 	CFPaziente VARCHAR(16) NOT NULL,
 	CodiceReferto INT,
 
-	FOREIGN KEY (CFDottore) REFERENCES Dottore(CodiceFiscale),
-	FOREIGN KEY (CFInfermiere) REFERENCES Infermiere(CodiceFiscale),
-	FOREIGN KEY (CFPaziente) REFERENCES Paziente(CodiceFiscale),
+	FOREIGN KEY (CFDottore) REFERENCES Dottore(CodiceFiscale)
+		ON DELETE NO ACTION,
+	FOREIGN KEY (CFInfermiere) REFERENCES Infermiere(CodiceFiscale)
+		ON DELETE NO ACTION,
+	FOREIGN KEY (CFPaziente) REFERENCES Paziente(CodiceFiscale)
+		ON DELETE NO ACTION,
 	FOREIGN KEY (CodiceReferto) REFERENCES Referto(Codice)
+		ON DELETE CASCADE
 
 ) ENGINE=INNODB;
 
 CREATE TABLE Referto (
 
 	Codice INT NOT NULL PRIMARY KEY,
-	Contenuto LONGTEXT NOT NULL,
+	Contenuto LONGTEXT NOT NULL
 
 
 )ENGINE=INNODB;
