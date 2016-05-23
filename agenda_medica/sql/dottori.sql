@@ -1,5 +1,3 @@
-SET FOREIGN_KEY_CHECKS = 0;
-TRUNCATE Dottore;
 INSERT INTO Dottore (CodiceFiscale, NomeUtente, Stipendio, Specializzazione, OraInizio, OraFine, Disponibile) VALUES 
 ('QRJNPQ98H52B230M',  'TLJ4Z87H0R',	46236,  'Dermatologia'  	09:30:00, 13:30:00, 1 ),
 ('CWPMCT39H13C894Q',  'RMHQ889SLD',	21462,	'Radiologia',		11:30:00, 15:30:00, 1 ),
