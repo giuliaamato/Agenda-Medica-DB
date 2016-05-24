@@ -1,3 +1,6 @@
+SET FOREIGN_KEY_CHECKS=0;
+TRUNCATE Dottore;
+
 INSERT INTO Dottore (CodiceFiscale, NomeUtente, Stipendio, Specializzazione, OraInizio, OraFine, Disponibile) VALUES 
 ('QRJNPQ98H52B230M',  'TLJ4Z87H0R',	46236,  'Dermatologia'  	09:30:00, 13:30:00, 1 ),
 ('CWPMCT39H13C894Q',  'RMHQ889SLD',	21462,	'Radiologia',		11:30:00, 15:30:00, 1 ),
@@ -17,10 +20,12 @@ INSERT INTO Dottore (CodiceFiscale, NomeUtente, Stipendio, Specializzazione, Ora
 ('PBKHQW27M51A918N',  'CD77TGJUHA',	43238,	'Ortopedia',		09:30:00, 13:30:00, 1 ),
 ('BLZVTT52H51B735D',  'Y2WDQF2D4Z',	29541,	'Endocrinologia',	15:30:00, 18:00:00, 1 ),
 ('CSSHTS70C70D600T',  'NX6L3H4ZDK',	45735,	'Ginecologia',	    	09:30:00, 13:30:00, 1 ),
-('YPBMMS54R62B530L',  'CD77TGJUHA', 	33298,  'Chirurgia plastica', 	15:30:00, 18:00:00, 1 ),
+('YPBMMS54R62B530L',  'CD77TGJUHA', 33298,  'Chirurgia plastica', 	15:30:00, 18:00:00, 1 ),
 ('SMBPVC50A20F486B',  'Y2WDQF2D4Z',	31456,	'Urologia',		15:30:00, 18:00:00, 1 ),
 ('KWGCQN80P19D266D',  'D83JJ7CXII',	45926,  'Neurologia',	  	15:30:00, 18:00:00, 1 ),
 ('HDNLHC75T18A195S',  'JNDEJNB857',	39318,	'Allergologia', 	09:30:00, 13:30:00, 1 ),
 ('ZGMHXT34E15F088J',  'EUY5R9RYCW',	21470,	'Psicoterapeuta',	15:30:00, 18:00:00, 1 ),
 ('SFMFTK58C70D786L',  'YCXGFRQXSC',	52711,	'Psicoterapeuta',	09:30:00, 13:30:00, 1 ),
 ('LSDBDC46P48A069E',  'OU174M725D',	58987,	'Nutrizionista',	09:30:00, 13:30:00, 1 );
+
+SET FOREIGN_KEY_CHECKS=1;
