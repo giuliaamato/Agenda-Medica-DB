@@ -1,9 +1,13 @@
+# -*- coding: latin-1 -*-
 from lxml import html
 import requests
 import random
 from nomi import MASCHI, FEMMINE
-from get_codice_catastale import get_citta_codice
+from get_codice_catastale import get_citta_codice,get_citta_nascita
 from control_char import controllo
+from email_gen import get_email
+from tel_gen import get_telefono
+from gen_indirizzo import get_indirizzo
 
 COGNOMI_PAGE = requests.get('http://www.cognomix.it/top100_cognomi_italia.php')
 COGNOMI_TREE = html.fromstring(COGNOMI_PAGE.content)
@@ -56,10 +60,10 @@ def data():
 def nome():
 	i = random.randint(1,2)
 	if i == 1:
-		r = random.randint(1,len(MASCHI))
+		r = random.randint(1,len(MASCHI)-1)
 		return (MASCHI[r],SESSO[0])
 	else:
-		r = random.randint(1,len(FEMMINE))
+		r = random.randint(1,len(FEMMINE)-1)
 		return (FEMMINE[r],SESSO[1])
 
 def cognome():
@@ -69,6 +73,7 @@ def cognome():
 
 
 def del_vowels(s):
+	s = s.replace("'","")
 	v = ['a','e','i','o','u']
 	cs = [] 
 	for c in s:
@@ -96,26 +101,29 @@ def codice_fiscale(nome,cognome,data,sesso,citta_codice):
 	codice_catastale = citta_codice[1]
 	cf = cognome+nome+nascita_anno+nascita_mese+nascita_giorno+codice_catastale
 	cf += controllo(cf)
-	return cf
+	return cf.upper()
 
 def crea_valori():
-	nome_sesso = nome()
+	valori = {}
+	nome_sesso = nome() # tupla (nome,sesso)
 	n = nome_sesso[0] # nome
-	sesso = nome_sesso[1]
+	sesso = nome_sesso[1] # sesso
 	c = cognome() # cognome
-	data_nascita = data()
-	citta_codice = get_citta_codice()
-	cf = codice_fiscale(n,c,data_nascita,sesso,citta_codice)
-
-	print n
-	print c
-	print sesso
-	print data_nascita
-	print cf.upper()
-
-
-
-
-
-if __name__ == '__main__':
-	crea_valori()
+	email = get_email(n,c)
+	data_nascita = data() # tupla (giorno,mese,anno)
+	citta_nascita = get_citta_nascita()
+	citta_codice = get_citta_codice() # città residenza
+	tel = get_telefono(citta_codice[2]) # telefono
+	indirizzo = get_indirizzo() # indirizzo
+	cf = codice_fiscale(n,c,data_nascita,sesso,citta_codice) #codice fiscale completo
+	valori["codice_fiscale"] = cf
+	valori["nome"] = n
+	valori["cognome"] = c
+	valori["sesso"] = sesso
+	valori["d_nascita"] = data_nascita
+	valori["c_residenza"] = citta_codice[0]
+	valori["c_nascita"] = citta_nascita
+	valori["indirizzo"] = indirizzo
+	valori["telefono"] = tel
+	valori["email"] = email
+	return valori

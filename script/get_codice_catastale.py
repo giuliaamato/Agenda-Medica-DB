@@ -1,3 +1,4 @@
+# -*- coding: latin-1 -*-
 import random
 
 nomi_regioni = {
@@ -29,30 +30,47 @@ def get_nome_regione(sigla):
 
 # Open file
 
-file = open('listacomuni.txt','r')
-
-risultati = {}
+# file = open('listacomuni.txt','r')
 
 
+
+
+def get_citta_nascita():
+	file = open('listacomuni.txt','r')
+	a = []
+	for line in file:
+		args = line.split(';')
+		a.append(args)
+	i = random.randint(0,len(a))
+	citta = a[i]
+	return citta[1]
 
 
 def calcola():
+	file = open('listacomuni.txt','r')
+	risultati = {}
 	for line in file:
-
+		
 		args = line.split(';')
 		regione = get_nome_regione(args[3])
 		
 		if regione == 'Veneto':
 			citta = args[1]
 			codice = args[6]
-			risultati[citta] = codice
-	
+			provincia = args[2]
+			risultati[citta] = (codice,provincia)
+			
+
+	return risultati
 		
 
 
 
 def get_citta_codice():
-	calcola()
+	risultati = calcola()
+	# print risultati.keys()
 	k = random.choice(risultati.keys())
-	return (k,risultati[k])
+	cod = risultati[k][0]
+	prov = risultati[k][1]
+	return (k,cod,prov) # ritorna nome della città, codice catastale e provincia
 	

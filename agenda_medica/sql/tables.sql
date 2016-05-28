@@ -25,6 +25,7 @@ CREATE TABLE Informazioni (
 	Nome 		   VARCHAR(20) NOT NULL,
 	Cognome		   VARCHAR(20) NOT NULL,
 	Email		   VARCHAR(45),
+	Sesso		   CHAR NOT NULL,
 	Telefono	   VARCHAR(20) NOT NULL,
 	CittaResidenza VARCHAR(45) NOT NULL,
 	CittaNascita   VARCHAR(45) NOT NULL,

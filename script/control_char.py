@@ -110,6 +110,7 @@ RESTO = {
 }
 
 def swap_values(arr,pari=True):
+	#print arr
 	if pari == True:
 		d = COD_PARI
 	else:
@@ -126,6 +127,7 @@ def calc_char(p,d):
 
 def controllo(cf):
 	cf = cf.upper()
+	#print cf
 	i = 1
 	pari = []
 	dispari = []
