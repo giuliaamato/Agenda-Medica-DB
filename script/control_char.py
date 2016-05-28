@@ -110,7 +110,7 @@ RESTO = {
 }
 
 def swap_values(arr,pari=True):
-	#print arr
+	# print arr
 	if pari == True:
 		d = COD_PARI
 	else:

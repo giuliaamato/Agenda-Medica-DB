@@ -1,3 +1,4 @@
+# -*- coding: latin-1 -*-
 from lxml import html
 import requests
 import random
@@ -16,9 +17,11 @@ def sanitize():
 				i = i.decode('latin_1')
 			except:
 				nomi.remove(i)
+			
 
 		
 
 def get_indirizzo():
-	i = random.randint(0,len(nomi))
+	sanitize()
+	i = random.randint(0,len(nomi)-1)
 	return nomi[i]

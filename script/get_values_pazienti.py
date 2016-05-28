@@ -66,9 +66,20 @@ def nome():
 		r = random.randint(1,len(FEMMINE)-1)
 		return (FEMMINE[r],SESSO[1])
 
+def sanitize_string(s):
+	return s.replace("'","''")
+	
+
+def sanitize_cf(s):
+	return s.replace(" ","")
+
+
+
 def cognome():
 	c = COGNOMI.pop()
 	c = c.lower().capitalize()
+	c = sanitize_string(c)
+	print c
 	return c
 
 
@@ -95,6 +106,7 @@ def codice_fiscale(nome,cognome,data,sesso,citta_codice):
 
 	nome = del_vowels(nome)
 	cognome = del_vowels(cognome)
+	cognome = sanitize_cf(cognome)
 	nascita_anno = str(data[2])[-2:]
 	nascita_mese = get_mese(data[1])
 	nascita_giorno = get_giorno(data[0],sesso)
@@ -112,16 +124,19 @@ def crea_valori():
 	email = get_email(n,c)
 	data_nascita = data() # tupla (giorno,mese,anno)
 	citta_nascita = get_citta_nascita()
+	citta_nascita = sanitize_string(citta_nascita)
 	citta_codice = get_citta_codice() # città residenza
+	citta_residenza = sanitize_string(citta_codice[0])
 	tel = get_telefono(citta_codice[2]) # telefono
 	indirizzo = get_indirizzo() # indirizzo
+	indirizzo = sanitize_string(indirizzo)
 	cf = codice_fiscale(n,c,data_nascita,sesso,citta_codice) #codice fiscale completo
 	valori["codice_fiscale"] = cf
 	valori["nome"] = n
 	valori["cognome"] = c
 	valori["sesso"] = sesso
-	valori["d_nascita"] = data_nascita
-	valori["c_residenza"] = citta_codice[0]
+	valori["d_nascita"] = str(data_nascita[0])+"/"+str(data_nascita[1])+"/"+str(data_nascita[2])
+	valori["c_residenza"] = citta_residenza
 	valori["c_nascita"] = citta_nascita
 	valori["indirizzo"] = indirizzo
 	valori["telefono"] = tel

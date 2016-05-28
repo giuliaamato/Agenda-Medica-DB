@@ -3,11 +3,11 @@ import random
 
 DOMINI = [
 
-	'gmail.com',
-	'aruba.it',
-	'libero.it',
-	'yahoo.it',
-	'hotmail.it',
+	'@gmail.com',
+	'@aruba.it',
+	'@libero.it',
+	'@yahoo.it',
+	'@hotmail.it',
 
 ]
 

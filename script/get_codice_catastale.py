@@ -28,12 +28,6 @@ def get_nome_regione(sigla):
 	return nomi_regioni[sigla]
 
 
-# Open file
-
-# file = open('listacomuni.txt','r')
-
-
-
 
 def get_citta_nascita():
 	file = open('listacomuni.txt','r')
@@ -68,7 +62,6 @@ def calcola():
 
 def get_citta_codice():
 	risultati = calcola()
-	# print risultati.keys()
 	k = random.choice(risultati.keys())
 	cod = risultati[k][0]
 	prov = risultati[k][1]
