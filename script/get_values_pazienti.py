@@ -3,7 +3,7 @@ from lxml import html
 import requests
 import random
 from nomi import MASCHI, FEMMINE
-from get_codice_catastale import get_citta_codice,get_citta_nascita
+from citta_comuni import get_citta_codice,get_citta_nascita
 from control_char import controllo
 from email_gen import get_email
 from tel_gen import get_telefono

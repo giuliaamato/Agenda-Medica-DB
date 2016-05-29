@@ -40,7 +40,7 @@ def get_citta_nascita():
 	return citta[1]
 
 
-def calcola():
+def calcola_citta_veneto():
 	file = open('listacomuni.txt','r')
 	risultati = {}
 	for line in file:
@@ -53,17 +53,22 @@ def calcola():
 			codice = args[6]
 			provincia = args[2]
 			risultati[citta] = (codice,provincia)
-			
-
 	return risultati
 		
 
-
-
 def get_citta_codice():
-	risultati = calcola()
+	risultati = calcola_citta_veneto()
 	k = random.choice(risultati.keys())
 	cod = risultati[k][0]
 	prov = risultati[k][1]
 	return (k,cod,prov) # ritorna nome della città, codice catastale e provincia
+
+
+def get_provincia(citta):
+	ris = calcola_citta_veneto()
+	for k in ris:
+		if k == citta:
+			return ris[k][1]
+
+
 	
