@@ -79,12 +79,13 @@ def cognome():
 	c = COGNOMI.pop()
 	c = c.lower().capitalize()
 	c = sanitize_string(c)
-	print c
+	# print c
 	return c
 
 
 def del_vowels(s):
 	s = s.replace("'","")
+	s = s.replace(" ","")
 	v = ['a','e','i','o','u']
 	cs = [] 
 	for c in s:

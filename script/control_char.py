@@ -127,7 +127,6 @@ def calc_char(p,d):
 
 def controllo(cf):
 	cf = cf.upper()
-	#print cf
 	i = 1
 	pari = []
 	dispari = []
@@ -140,6 +139,8 @@ def controllo(cf):
 	pari = swap_values(pari)
 	dispari = swap_values(dispari,False)
 	c = calc_char(pari,dispari)
+	if c == None:
+		return 'Y'
 	return c
 
 

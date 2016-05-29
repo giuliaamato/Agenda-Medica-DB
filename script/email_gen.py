@@ -12,8 +12,10 @@ DOMINI = [
 ]
 
 def sanitize(s):
-	return s.replace("'","")
-
+	s = s.replace("'","")
+	s = s.replace(" ","")
+	return s
+	
 def get_email(nome,cognome):
 	i = random.randint(0,len(DOMINI)-1)
 	dominio = DOMINI[i]
