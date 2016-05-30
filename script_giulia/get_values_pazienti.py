@@ -3,13 +3,12 @@ from lxml import html
 import requests
 import random
 from nomi import MASCHI, FEMMINE
-from get_codice_catastale import get_citta_codice,get_citta_nascita
+from citta_comuni import get_citta_codice,get_citta_nascita
 from control_char import controllo
 from email_gen import get_email
 from tel_gen import get_telefono
 from gen_indirizzo import get_indirizzo
 from cognomi import COGNOMI
-
 
 MESI = {
 	
@@ -72,12 +71,13 @@ def sanitize_cf(s):
 
 
 def cognome():
-	c = random.randint(1, 58)
-	return COGNOMI[(c)]
+	c = random.randint(0, len(COGNOMI)-1)
+	return COGNOMI.pop(c)
 
 
 def del_vowels(s):
 	s = s.replace("'","")
+	s = s.replace(" ","")
 	v = ['a','e','i','o','u']
 	cs = [] 
 	for c in s:
