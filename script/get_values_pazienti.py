@@ -9,9 +9,18 @@ from email_gen import get_email
 from tel_gen import get_telefono
 from gen_indirizzo import get_indirizzo
 
-COGNOMI_PAGE = requests.get('http://www.cognomix.it/top100_cognomi_italia.php')
-COGNOMI_TREE = html.fromstring(COGNOMI_PAGE.content)
-COGNOMI = COGNOMI_TREE.xpath('//td[@class="text-center"]/strong/text()')
+
+COGNOMI = [
+
+	'Adone',
+	'Baghi',
+	'Farno',
+	'Falerno',
+	'Bialetti',
+	'Nenni',
+	'Daddario',
+	'Bertelli'
+]
 
 
 

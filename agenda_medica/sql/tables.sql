@@ -105,7 +105,7 @@ CREATE TABLE Admin (
 CREATE TABLE Dottore (
 
 	CodiceFiscale VARCHAR(16) NOT NULL,
-	NomeUtente VARCHAR(10) NOT NULL,
+	NomeUtente VARCHAR(20) NOT NULL,
 	Stipendio SMALLINT NOT NULL,
 	Specializzazione VARCHAR(30) NOT NULL,
 	OraInizio TIME NOT NULL,
@@ -147,11 +147,11 @@ CREATE TABLE Infermiere (
 
 CREATE TABLE VisitaMedica (
 
-	CodiceVisita INT NOT NULL PRIMARY KEY,
+	CodiceVisita INT NOT NULL PRIMARY KEY AUTO_INCREMENT,
 	Data DATETIME NOT NULL,
 	Ambulatorio VARCHAR(25) NOT NULL,
-	TipoVisita VARCHAR(15) NOT NULL,
-	TipoPrenotazione VARCHAR(15) NOT NULL,
+	TipoVisita BOOL NOT NULL,
+	TipoPrenotazione BOOL NOT NULL,
 	Priorita CHAR,
 	CFDottore VARCHAR(16),
 	CFInfermiere VARCHAR(16),
