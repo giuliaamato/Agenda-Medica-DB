@@ -1,11 +1,11 @@
 SET FOREIGN_KEY_CHECKS = 0;
 TRUNCATE Citta;
 INSERT INTO Informazioni(CodiceFiscale,DataNascita,Nome,Cognome,Email,Sesso,Telefono,CittaResidenza,CittaNascita,Indirizzo,CodiceASL) VALUES 
-('NGRALB80D24B578M','24/4/1980','Alberto','Negri','albertonegri41@gmail.com','0425845707','Canaro','Alì Terme','via don E. Cagnin',7),
+('NGRALB80D24B578M','24/4/1980','Alberto','Negri','albertonegri41@gmail.com','0425845707','Canaro','AlÃ¬ Terme','via don E. Cagnin',7),
 ('DMCRGN75H70L026P','30/6/1975','Regina','Damico','reginadamico21@aruba.it','0425830877','Taglio di Po','Povoletto','via Alfredo Oriani',7),
 ('ORLGVN83E03D506A','3/5/1983','Giovanni','Orlando','giovanniorlando81@yahoo.it','0437702464','Farra d''Alpago','Sternatia','via Bassi',4),
 ('DMCFRN66P41H829X','1/9/1966','Francesca','D''amico','francescadamico82@libero.it','0444322760','Sandrigo','Santa Croce Camerina','Vicolo siora Andriana del Vescovo',1),
-('SRRTTN02E62F332W','22/5/2002','Tatiana','Sorrentino','tatianasorrentino87@hotmail.it','0422775007','Monastier di Treviso','Noicàttaro','via Giuseppe Maffioli',6),
+('SRRTTN02E62F332W','22/5/2002','Tatiana','Sorrentino','tatianasorrentino87@hotmail.it','0422775007','Monastier di Treviso','NoicÃ ttaro','via Giuseppe Maffioli',6),
 ('RGGMRA80H56C562B','16/6/1980','Maria','Ruggiero','mariaruggiero82@yahoo.it','0437403913','Lentiai','Lequio Tanaro','via Venzone',5),
 ('PGNSTF01L60F116W','20/7/2001','Stefania','Pagano','stefaniapagano77@aruba.it','0422187536','Silea','Nave San Rocco','via Giuseppe Toniolo',6),
 ('MLNDLT24M60F465M','20/8/1924','Diletta','Milani','dilettamilani50@libero.it','0444381935','Montecchio Precalcino','Bargagli','Via fratelli Testolini',1),
@@ -81,16 +81,16 @@ INSERT INTO Informazioni(CodiceFiscale,DataNascita,Nome,Cognome,Email,Sesso,Tele
 ('SNTRSR98A29L949N','29/1/1998','Rosario','Santoro','rosariosantoro9@gmail.com','045121929','Villafranca di Verona','Ostellato','via Bellucci',4),
 ('FNTMRT85R43I259F','3/10/1985','Marta','Fontana','martafontana37@hotmail.it','045140177','Sant''Ambrogio di Valpolicella','Magreglio','via Bramante',5),
 ('BRBCRM23A01L899E','1/1/1923','Carmine','Barbieri','carminebarbieri78@gmail.com','041268829','Vigonovo','Aci Sant''Antonio','Via Zangrando',3),
-('MRTSLV81C68C670L','28/3/1981','Silvia','Moretti','silviamoretti79@hotmail.it','0422792480','Crocetta del Montello','Patù','via Venanzio Fortunato',6),
+('MRTSLV81C68C670L','28/3/1981','Silvia','Moretti','silviamoretti79@hotmail.it','0422792480','Crocetta del Montello','PatÃ¹','via Venanzio Fortunato',6),
 ('LMBPLA06A58L040G','18/1/2006','Paola','Lombardi','paolalombardi76@hotmail.it','0437338712','Tambre','Frassinetto','via San Parisio',5),
 ('RZZNMO89C69F725Q','29/3/1989','Noemi','Rizzo','noemirizzo10@hotmail.it','0422224992','Morgano','Morterone','sottoportico dei Soffioni',6),
-('GRDCRM13S01M145B','1/11/2013','Carmine','Giordano','carminegiordano33@yahoo.it','0444424143','Zanè','Terranova Sappo Minulio','vicolo Sant''Antonino A',1),
+('GRDCRM13S01M145B','1/11/2013','Carmine','Giordano','carminegiordano33@yahoo.it','0444424143','ZanÃ¨','Terranova Sappo Minulio','vicolo Sant''Antonino A',1),
 ('CSTRBC26M51I783A','11/8/1926','Rebecca','Costa','rebeccacosta37@aruba.it','0444140910','Solagna','Altavilla Milicia','via Boito',1),
 ('MNCDLT91L51G123E','11/7/1991','Diletta','Mancini','dilettamancini18@libero.it','0422810611','Orsago','Pogno','Via Negri',6),
 ('DLCQNT04P21I783Y','21/9/2004','Quinto','De luca','quintodeluca40@yahoo.it','0444369194','Solagna','Castagnaro','via Antonio Rosmini',1),
 ('CNTFRN20B04L952K','4/2/1920','Francesco','Conti','francescoconti2@hotmail.it','0444126869','Villaga','Pontenure','via D. Franceschetti',1),
 ('GLLMRT85T41B433B','1/12/1985','Marta','Gallo','martagallo2@hotmail.it','0444552192','Caltrano','Giuggianello','Via Scipio Slataper',1),
-('BRNGNL85A13C815M','13/1/1985','Gianluca','Bruno','gianlucabruno39@yahoo.it','0422395398','Codognè','Aprigliano','Via Ninni',6),
+('BRNGNL85A13C815M','13/1/1985','Gianluca','Bruno','gianlucabruno39@yahoo.it','0422395398','CodognÃ¨','Aprigliano','Via Ninni',6),
 ('GRCNDA76P69B161N','29/9/1976','Nadia','Greco','nadiagreco85@gmail.com','0444204326','Bressanvido','Garaguso','via dell''Asilo',1),
 ('MRNBTT21H04I375A','4/6/1921','Battista','Marino','battistamarino50@aruba.it','049553607','Sant''Urbano','Morterone','via Turati',2),
 ('RCCANG07H66L554V','26/6/2007','Angelica','Ricci','angelicaricci29@libero.it','0444113813','Valdastico','Giovinazzo','via Bartolomeo Orioli',1),
@@ -99,6 +99,5 @@ INSERT INTO Informazioni(CodiceFiscale,DataNascita,Nome,Cognome,Email,Sesso,Tele
 ('BNCPLA75E64E936W','24/5/1975','Paola','Bianchi','paolabianchi51@libero.it','041553686','Marcon','Filottrano','viale Olimpia',3),
 ('ESPNMO68S53I531Q','13/11/1968','Noemi','Esposito','noemiesposito29@yahoo.it','0444585468','Schio','Costigliole d''Asti','Via Ercole Smaniotto',1),
 ('FRRRBR12L41A220M','1/7/2012','Roberta','Ferrari','robertaferrari15@hotmail.it','0444424610','Alonte','Gambugliano','vicolo Gozzi',1),
-('RSSNCL40M10B061A','10/8/1940','Nicola','Russo','nicolarusso5@libero.it','0422991002','Borso del Grappa','Buccinasco','via Pietro di Dante',6),
-;
+('RSSNCL40M10B061A','10/8/1940','Nicola','Russo','nicolarusso5@libero.it','0422991002','Borso del Grappa','Buccinasco','via Pietro di Dante',6);
 SET FOREIGN_KEY_CHECKS = 1;
