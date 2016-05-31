@@ -85,11 +85,12 @@ def sanitize_cf(s):
 
 
 def cognome():
-	c = COGNOMI.pop()
-	c = c.lower().capitalize()
-	c = sanitize_string(c)
-	# print c
-	return c
+	if len(COGNOMI) > 0:
+		c = COGNOMI.pop()
+		c = c.lower().capitalize()
+		c = sanitize_string(c)
+		# print c
+		return c
 
 
 def del_vowels(s):
