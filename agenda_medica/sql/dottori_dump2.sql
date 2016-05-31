@@ -38,5 +38,5 @@ INSERT INTO Dottore (CodiceFiscale, NomeUtente, Stipendio, Specializzazione, Ora
 ('ASPNDA65A64I373P', 'nadiaasperina65',		34534, 'Oculistica',		13:30:00, 16:30:00, 1),
 ('VLLSBS43C25B493L', 'sebastianovallorin43',34245, 'Oculistica',		09:30:00, 13:30:00, 1),
 ('CNDNDA32S60A292O', 'nadiacandi32',		41231, 'Cardiologia',		13:30:00, 16:30:00, 1),
-('FLSNCC75C22H117L', 'niccolofalsetti75',	33113, 'Ortopedia',			09:30:00, 13:30:00, 1);
+('FLSNCC75C22H117L', 'niccolofalsetti75',	31113, 'Ortopedia',			09:30:00, 13:30:00, 1);
 
