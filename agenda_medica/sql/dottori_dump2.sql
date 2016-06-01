@@ -1,6 +1,8 @@
+SET FOREIGN_KEY_CHECKS = 0;
+TRUNCATE Dottore;
 INSERT INTO Dottore (CodiceFiscale, NomeUtente, Stipendio, Specializzazione, OraInizio, OraFine, Disponibile) VALUES 
-('NRNMRA70S55D674C', 'marianerini70', 	  	46236, 'Dermatologia', 		09:30:00, 13:30:00, 1),
-('BDLQNT53L28H655N', 'quintobadalamenti53', 45234, 'Radiologia', 	  	09:30:00, 13:30:00, 1),
+('NRNMRA70S55D674C', 'marianerini70', 	  	46236, 'Dermatologia',09:30:00, 13:30:00, 1),
+('BDLQNT53L28H655N', 'quintobada53', 45234, 'Radiologia', 	  	09:30:00, 13:30:00, 1),
 ('VSTNCC40M15I008B', 'niccolovasta40', 		  34234, 'Dermatologia', 		13:30:00, 15:30:00, 1),
 ('OPPGSP37D03H220B', 'giuseppeoppizi37', 	  45898, 'Urologia', 			  13:30:00, 15:30:00, 1),
 ('CFFNCC56P12B128P', 'niccolocaffarelli56', 34543, 'Pediatria', 		  09:30:00, 13:30:00, 1),
@@ -39,4 +41,5 @@ INSERT INTO Dottore (CodiceFiscale, NomeUtente, Stipendio, Specializzazione, Ora
 ('VLLSBS43C25B493L', 'sebastianovallorin43',34245, 'Oculistica',		  09:30:00, 13:30:00, 1),
 ('CNDNDA32S60A292O', 'nadiacandi32',		    41231, 'Cardiologia',		  13:30:00, 16:30:00, 1),
 ('FLSNCC75C22H117L', 'niccolofalsetti75',	  31113, 'Ortopedia',		  	09:30:00, 13:30:00, 1);
+SET FOREIGN_KEY_CHECKS = 1;
 
