@@ -1,0 +1,1 @@
+INSERT INTO Accesso() VALUES
