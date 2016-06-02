@@ -1,0 +1,15 @@
+INSERT INTO Ambulatorio (Nome) VALUES 
+('Dermatologia'),
+('Radiologia'),
+('Urologia'),
+('Pediatria'),
+('Chirurgia'),
+('Cardiologia'),
+('Ginecologia'),
+('Allergologia'),
+('Psichiatria'),
+('Ortopedia'),
+('Neurologia'),
+('Pronto Soccorso'),
+('Geriatria'),
+('Oculistica');
