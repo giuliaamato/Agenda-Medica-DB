@@ -5,10 +5,10 @@
 */
 class DBConfig
 {
-	$db_server = "localhost";
-	$db_password = "";
-	$db_username = "root";
-	$db_name = "AgendaMedica";
+	private $db_server = "localhost";
+	private $db_password = "";
+	private $db_username = "root";
+	private $db_name = "AgendaMedica";
 
 	private $db_conn = null;
 
