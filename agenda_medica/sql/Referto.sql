@@ -22,7 +22,7 @@ INSERT INTO Referto(Codice, Contenuto) VALUES
 (19, "Al controllo odierno in ambito epatico, in esiti di resezione del VII segmento, non si rilevano lesioni focali oncologicamente significative; permangono immodificate le microcisti biliare epatiche di diametro massimo di circa a 5mm."),
 (20, "Immodificate le note linfoadenopatie presenti in sede retroperitoneali, curali e retro aortocavali precedentemente descritte. Non versamento endoaddominale, non lesioni ossee."),
 (21, "Non alterazioni densitometriche a livello pancreatico, quesito clinico: follow up oncologico. Note per il paziente: per ogni informazione o chiarimento sugli aspetti medici, può rivolgersi al suo medico curante."),
-(22, "pediatria A seguito di una visita preliminare in data odierna prescrivo i seguenti esami da effettuare: AZOTEMIA - UREA, CREATININA, ELETTROFORESI DELLE PROTEINE, EMOCROMO, FERRITINA, GLICEMIA (GLUCOSIO), URINE. Da presentare al prossimo controllo."),
+(22, "A seguito di una visita preliminare in data odierna prescrivo i seguenti esami da effettuare: AZOTEMIA - UREA, CREATININA, ELETTROFORESI DELLE PROTEINE, EMOCROMO, FERRITINA, GLICEMIA (GLUCOSIO), URINE. Da presentare al prossimo controllo."),
 (23, "Si segnala agli esami del sangue importante rialzo della viremia collegata all'HCV. Visto tale rialzo si richiede visita urologica. Ritengo inoltre indicato stretto mornitoraggio dell'eventuale rialzo dell'alfafetoproteina."),
 
 SET FOREIGN_KEY_CHECKS = 1;
