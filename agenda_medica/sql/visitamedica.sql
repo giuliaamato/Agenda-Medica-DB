@@ -24,6 +24,12 @@ INSERT INTO VisitaMedica(CodiceVisita, Data, Ambulatorio, TipoVisita, TipoPrenot
 (21, '2016-05-10 14:10:00', 'Pronto Soccorso', 'Visita', 'Effettuata', 'L', 'VNTRMN55A25I938C', 'NGRORN50C56E588V', 'FRIRCH25R48C812Q', 21),
 (22, '2016-05-11 09:45:00', 'Pediatria', 'Visita', 'Effettuata', 'L', 'ALTCHR76C62H280W', 'VNTTRS68M12C461Q', 'RZZSLV11M61A627C', 22),
 (23, '2016-05-11 10:15:00', 'Radiologia', 'Visita', 'Effettuata', 'L', 'BDLQNT53L28H655N', 'GLMANG41T65C577W', 'CRBRBR83E14D686I', 23),
-(24, '2016-06-10 10:00:00', 'Urologia', 'Visita', 'Prenotata', 'L', 'OPPGSP37D03H220B', NULL, 'CRBRBR83E14D686I', NULL);
+(24, '2016-06-10 10:00:00', 'Urologia', 'Visita', 'Prenotata', 'L', 'OPPGSP37D03H220B', NULL, 'CRBRBR83E14D686I', NULL),
+(25, '2016-06-10 13:30:00', 'Geriatria', 'Visita', 'Prenotata', 'L', 'VNDTTN70P46A434Q', NULL, 'FRIRCH25R48C812Q', NULL),
+(26, '2016-06-10 13:30:00', 'Urologia', 'Visita', 'Prenotata', 'L', 'ANNGLI75B70B912K', NULL, 'MRTSML96A10D549L', NULL),
+(27, '2016-06-11 14:00:00', 'Ortopedia', 'Controllo', 'Prenotata', 'L', 'OTTGSP69E21H220D', NULL, 'DMCRGN75H70L026P', NULL),
+(28, '2016-06-11 09:30:00', 'Chirurgia', 'Controllo', 'Prenotata', 'L', 'OPPMTT55M03G981I', NULL, 'VTLSLV68T24E092N', NULL),
+(29, '2016-06-12 14:00:00', 'Allergologia', 'Controllo', 'Prenotata', 'L', 'ADMGVN76A28I347L', NULL, 'NRERML88B11B563R', NULL),
+(30, '2016-06-12 14:30:00', 'Radiologia', 'Visita', 'Prenotata', 'L', 'MCRFLR84A49B582A', NULL, 'BRNTDD61P17C225V', NULL);
 
 SET FOREIGN_KEY_CHECKS = 1;
