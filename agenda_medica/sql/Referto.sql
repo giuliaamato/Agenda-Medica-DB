@@ -17,5 +17,10 @@ INSERT INTO Referto(Codice, Contenuto) VALUES
 (13, "Certifico di aver visitato la paziente, già in cura presso questa ASL. Presenta uno stato d'ansia con manifestazione a carattere panico reattivo ad un evento traumatico: riferisce di aver assistito ad una rapina a mano armata sabato scorso, mentre era a fare acquisti in un negozio. Terapia consigliata: xanax gtt 10gtt x 3 die; felison 30 mg 1 cp alla sera; talofen 10-15 gtt al bisogno"),
 (14, "Paziente affetto da epatocarcinoma con secondarismi linfonodali addominali e toracici. Attualmente in trattamento con zebrafish per sua spontanea volontà, ritengo utile il trattamento con gasthcl per tre mesi. In caso di anomalie presentarsi il prima possibile per un controllo"),
 (15, "Il paziente ha eseguito TC con evidenza di una risposta di alcune lesioni con stazionarità di altre. Alfa-fetoproteina negativa. Ottime condizioni generali."),
-(16, "A seguito di un secondo controllo, ritengo utile eseguire nuova TC a tre mesi, con ripetizione dell'alfafetoproteina ogni mese. Se in aumento si anticiperà tale periodo.");
+(16, "A seguito di un secondo controllo, ritengo utile eseguire nuova TC a tre mesi, con ripetizione dell'alfafetoproteina ogni mese. Se in aumento si anticiperà tale periodo."),
+(17, "Indagine effettuata senza e con somministrazione di MdC iodato (lobitridolo) e confrontata con precedente. Non si evidenziano masse o lesioni parenchimali a focolaio in atto. Non versamento pleurico. Non linfoadenopatie ilo-mediastiniche."),
+(18, "Al controllo odierno in ambito epatico, in esiti di resezione del VII segmento, non si rilevano lesioni focali oncologicamente significative; permangono immodificate le microcisti biliare epatiche di diametro massimo di circa a 5mm."),
+(19, "Immodificate le note linfoadenopatie presenti in sede retroperitoneali, curali e retro aortocavali precedentemente descritte. Non versamento endoaddominale, non lesioni ossee."),
+(20, "Non alterazioni densitometriche a livello pancreatico, quesito clinico: follow up oncologico. Note per il paziente: per ogni informazione o chiarimento sugli aspetti medici, può rivolgersi al suo medico curante."),
+(21, "
 SET FOREIGN_KEY_CHECKS = 1;
