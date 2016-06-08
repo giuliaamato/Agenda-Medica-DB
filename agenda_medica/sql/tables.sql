@@ -13,7 +13,7 @@ DROP TABLE IF EXISTS Infermiere;
 DROP TABLE IF EXISTS Referto;
 DROP TABLE IF EXISTS VisitaMedica;
 DROP TABLE IF EXISTS DatiAccesso;
-
+DROP TABLE IF EXISTS Ambulatorio;
 
 
 
@@ -149,9 +149,9 @@ CREATE TABLE VisitaMedica (
 
 	CodiceVisita INT NOT NULL PRIMARY KEY AUTO_INCREMENT,
 	Data DATETIME NOT NULL,
-	Ambulatorio VARCHAR(25) NOT NULL,
-	TipoVisita BOOL NOT NULL,
-	TipoPrenotazione BOOL NOT NULL,
+	NomeAmbulatorio VARCHAR(5) NOT NULL,
+	TipoVisita BOOLEAN NOT NULL,
+	TipoPrenotazione BOOLEAN NOT NULL,
 	Priorita CHAR,
 	CFDottore VARCHAR(16),
 	CFInfermiere VARCHAR(16),
@@ -160,6 +160,7 @@ CREATE TABLE VisitaMedica (
 
 	FOREIGN KEY (CFDottore) REFERENCES Dottore(CodiceFiscale)
 		ON DELETE NO ACTION,
+	FOREIGN KEY (NomeAmbulatorio) REFERENCES Ambulatorio(Nome),
 	FOREIGN KEY (CFInfermiere) REFERENCES Infermiere(CodiceFiscale)
 		ON DELETE NO ACTION,
 	FOREIGN KEY (CFPaziente) REFERENCES Paziente(CodiceFiscale)
@@ -177,3 +178,12 @@ CREATE TABLE Referto (
 
 )ENGINE=INNODB;
 
+CREATE TABLE Ambulatorio (
+
+	Nome VARCHAR(5) NOT NULL,
+	CodiceASL INT NOT NULL,
+	FOREIGN KEY (CodiceASL) REFERENCES ASL(Codice)
+
+) ENGINE = INNODB;
+
+SET FOREIGN_KEY_CHECKS=1;
