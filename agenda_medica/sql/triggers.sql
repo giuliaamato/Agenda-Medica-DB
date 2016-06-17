@@ -1,16 +1,15 @@
 # Quando un dottore viene cancellato dal database, 
 # per ogni visita effettuata modificare “CF Dottore” mettendolo a NULL. 
-# Se la visita è di tipo “prenotata” bisogna assegnare la visita ad un 
-# dottore disponibile in quella data e con la specializzazione adatta.
+# Se la visita è di tipo prenotata è necessario invece cancellarla dal database.
 DELIMITER $$
 DROP IF EXISTS TRIGGER controlla_visita $$
 CREATE TRIGGER controlla_visita
  BEFORE DELETE ON Dottore
  FOR EACH ROW
  BEGIN
- 	UPDATE VisitaMedica
- 	SET VisitaMedica.CFDottore = $chiama_procedura($row)
- 	WHERE VisitaMedica.CFDottore = OLD.CodiceFiscale;
+ 	DELETE FROM VisitaMedica 
+ 	WHERE CFDottore=OLD.CodiceFiscale 
+ 	AND TipoPrenotazione=1
  END $$
 DELIMITER;
 
@@ -22,7 +21,10 @@ CREATE TRIGGER controlla_orario
  BEFORE INSERT ON VisitaMedica
  FOR EACH ROW
  BEGIN
- 	# controlla se il dottore è disponibile
+ 	IF NEW.Data > (SELECT Dottore.OraFine FROM Dottore 
+ 				   WHERE Dottore.CodiceFiscale=NEW.CFDottore)
+ 	THEN
+ 		signal sqlstate '45000' set message_text = 'Data oltre orario visite'
  END $$
  DELIMITER;
 
