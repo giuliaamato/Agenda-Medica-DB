@@ -19,7 +19,7 @@
       $_SESSION['logged_as'] = 'admin';
       $_SESSION['codice_fiscale'] = $rows[0]['CodiceFiscale'];
 
-      header("Location: http://localhost/agenda_medica/indexadmin.php");
+      header("Location: indexadmin.php");
       die();
 
     }
@@ -28,7 +28,7 @@
 
     if (isset($_SESSION['username']) && $_SESSION['logged_as'] == 'admin'){
 
-      header("Location: http://localhost/agenda_medica/indexadmin.php");
+      header("Location: indexadmin.php");
       die();
 
     }
@@ -57,7 +57,7 @@
 
 <nav class="navbar navbar-default">
   <div class="navbar-header">
-    <a class="navbar-brand" href="http://localhost/agenda_medica/">Pagina iniziale</a>
+    <a class="navbar-brand" href="index.html">Pagina iniziale</a>
   </div>
 </nav>
 

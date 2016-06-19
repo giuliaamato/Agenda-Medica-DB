@@ -19,7 +19,7 @@
       $_SESSION['logged_as'] = 'cup';
       $_SESSION['cod_asl'] = $cod_asl;
 
-      header('Location: http://localhost/agenda_medica/indexcup.php');
+      header('Location: indexcup.php');
       die();
 
     }

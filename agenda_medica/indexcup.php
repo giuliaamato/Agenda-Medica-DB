@@ -5,7 +5,7 @@
 
 	if (!$_SESSION['logged_as'] == 'cup' && !isset($_SESSION['cod_asl'])){
 
-		header("Location: http://localhost/agenda_medica/loginCUP.php");
+		header("Location: loginCUP.php");
 		die();
 
 	}

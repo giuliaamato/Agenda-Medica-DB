@@ -9,14 +9,14 @@
 		session_unset();
 		session_destroy();
 
-		header("Location: http://localhost/agenda_medica/loginadmin.php");
+		header("Location: loginadmin.php");
 		die();
 
 	}
 
 	if (!isset($_SESSION['username']) && !$_SESSION['logged_as']='admin'){
 
-		header("Location: http://localhost/agenda_medica/loginAdmin.php");
+		header("Location: loginAdmin.php");
 		die();
 
 	}
@@ -44,7 +44,7 @@
 
 <nav class="navbar navbar-inverse">
   <div class="navbar-header">
-    <a class="navbar-brand" href="http://localhost/agenda_medica/">Pagina iniziale</a>
+    <a class="navbar-brand" href="#">Admin</a>
   </div>
   <?php echo "<p class='navbar-text'>Loggato come ".$_SESSION['username']."</p>" ?>
   <form method='POST' action='#'><button type="submit" class="btn btn-default navbar-btn">Logout</button></form>

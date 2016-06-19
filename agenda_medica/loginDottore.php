@@ -19,7 +19,7 @@
       $_SESSION['codice_fiscale'] = $rows[0]['CodiceFiscale'];
       $_SESSION['logged_as'] = 'dottore';
 
-      header("Location: http://localhost/agenda_medica/indexdottore.php");
+      header("Location: indexdottore.php");
       die();
 
     }
@@ -28,7 +28,7 @@
 
     if (isset($_SESSION['username']) && $_SESSION['logged_as'] == 'dottore'){
 
-      header("Location: http://localhost/agenda_medica/indexdottore.php");
+      header("Location: indexdottore.php");
       die();
 
     }
@@ -59,7 +59,7 @@
 
 <nav class="navbar navbar-default">
   <div class="navbar-header">
-    <a class="navbar-brand" href="http://localhost/agenda_medica/">Pagina iniziale</a>
+    <a class="navbar-brand" href="index.html">Pagina iniziale</a>
   </div>
 </nav>
 

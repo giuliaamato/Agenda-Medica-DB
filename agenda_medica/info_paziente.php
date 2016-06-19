@@ -4,7 +4,7 @@
 
   if (!isset($_SESSION['username']) || !$_SESSION['logged_as'] == 'dottore'){
 
-    header("Location: http://localhost/agenda_medica/");
+    header("Location: index.html");
     die();
 
   }
@@ -32,7 +32,7 @@
 
   <nav class="navbar navbar-inverse">
   <div class="navbar-header">
-    <a class="navbar-brand" href="http://localhost/agenda_medica/">Pagina iniziale</a>
+    <a class="navbar-brand" href="index.html">Pagina iniziale</a>
   </div>
   <?php echo "<p class='navbar-text'>Loggato come ".$_SESSION['username']."</p>" ?>
   <form method='POST' action='#'><button type="submit" class="btn btn-default navbar-btn">Logout</button></form>

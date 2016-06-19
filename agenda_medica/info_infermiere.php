@@ -8,7 +8,7 @@
     session_unset();
     session_destroy();
 
-    header("Location: http://localhost/agenda_medica/");
+    header("Location: index.html");
     die();
 
   }
@@ -16,7 +16,7 @@
 
   if (!isset($_SESSION['username']) && (!$_SESSION['logged_as'] == 'dottore' || !$_SESSION['logged_as']=='admin')){
 
-    header("Location: http://localhost/agenda_medica/");
+    header("Location: index.html");
     die();
 
   }
@@ -48,7 +48,7 @@
 
     echo "<nav class='navbar navbar-inverse'>";
     echo "<div class='navbar-header'>";
-    echo "<a class='navbar-brand' href='http://localhost/agenda_medica/'>Pagina iniziale</a>";
+    echo "<a class='navbar-brand' href='index.html'>Pagina iniziale</a>";
     echo "</div>";
     
     echo "<p class='navbar-text'>Loggato come ".$_SESSION['username']."</p>";

@@ -3,6 +3,15 @@
 	session_start();
 
 	include("db_config.php");
+	include("delete_functions.php");
+
+	if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['codice_visita'])){
+
+		delete_visita($_POST['codice_visita']);
+
+		header("Refresh:0");
+
+	} else {
 
 	if ($_SERVER['REQUEST_METHOD'] == 'POST'){
 
@@ -10,18 +19,21 @@
 		session_unset();
 		session_destroy();
 
-		header("Location: http://localhost/agenda_medica/logindottore.php");
+		header("Location: logindottore.php");
 		die();
 
 	}
 
+	}
 
-	if (!isset($_SESSION['username']) || !$_SESSION['logged_as']=='dottore'){
 
-		header("Location: http://localhost/agenda_medica/logindottore.php");
+	if (!isset($_SESSION['username']) && !$_SESSION['logged_as']=='dottore'){
+
+		header("Location: logindottore.php");
 		die();
 
 	}
+
 
 
 
@@ -46,7 +58,7 @@
 
 <nav class="navbar navbar-inverse">
   <div class="navbar-header">
-    <a class="navbar-brand" href="http://localhost/agenda_medica/">Pagina iniziale</a>
+    <a class="navbar-brand" href="#">Agenda</a>
   </div>
   <?php echo "<p class='navbar-text'>Loggato come ".$_SESSION['username']."</p>" ?>
   <form method='POST' action='#'><button type="submit" class="btn btn-default navbar-btn">Logout</button></form>
@@ -66,6 +78,8 @@
 
 			$db_conn = new DBConfig();
 
+
+
 			$rows = $db_conn->db_query("SELECT i.Nome, i.Cognome, i.Email, i.Telefono, i.CittaResidenza, a.CittaSede FROM Informazioni AS i,ASL AS a WHERE i.CodiceFiscale='".$cod_fiscale."' AND a.Codice=(SELECT CodiceASL FROM Informazioni WHERE CodiceFiscale='".$cod_fiscale."');");
 
 			$persona = $rows[0];
@@ -84,19 +98,27 @@
 
     		
   		</div>
+
+  		
+
 	</div>
+
+	
 
 
 	<h1>Agenda Medica</h1>
 
-	<table class="table table-bordered">
+	<form method='GET' action='nuova_visita.php'>
+  			
+			<button type='submit' class='btn btn-danger'>Crea nuova visita</button>
 
-		<tr>
-			<th>Data Visita</th>
-			<th>Ambulatorio</th>
-			<th>Paziente</th>
-			<th>Referto</th>
-		</tr>
+  	</form>
+
+  	<br />
+
+	
+
+		
 
 		<?php
 
@@ -107,23 +129,61 @@
 
 			if (count($rows)>0){
 
+				echo "<h2>Visite prenotate</h2>";
+
+				echo "<table class='table table-bordered'>";
+				echo "<tr><th>Data Visita</th><th>Ambulatorio</th><th>Paziente</th><th>Azione</th></tr>";
+
 
 
 				for ($i=0; $i < count($rows) ; $i++) { 
 
 					$v = $rows[$i];
 
-					echo "<tr>";
-					echo "<td>".$v['Data']."</td>";
-					echo "<td>".$v['Ambulatorio']."</td>";
-					echo "<td><form method='GET' action='info_paziente.php'><input type='hidden' name='cf_paziente' value='".$v['CFPaziente']."'/><button class='btn btn-primary'>".$v['CFPaziente']."</button></form></td>";
-					if (isset($v['CodiceReferto'])){
-						echo "<td><form method='GET' action='info_referto.php'><input type='hidden' name='cod_referto' value='".$v['CodiceReferto']."'/><button class='btn btn-primary'>Referto n.".$v['CodiceReferto']."</button></form></td>";
-					} else {
-						echo "<td>Referto non disponibile</td>";
-					}
-					echo "</tr>";
+					if ($v['TipoPrenotazione'] == 0){ // Visite prenotate
+
+						echo "<tr>";
+						echo "<td>".$v['Data']."</td>";
+						echo "<td>".$v['NomeAmbulatorio']."</td>";
+						echo "<td><form method='GET' action='info_paziente.php'><input type='hidden' name='cf_paziente' value='".$v['CFPaziente']."'/><button class='btn btn-primary'>".$v['CFPaziente']."</button></form></td>";
+						echo "<td><form method='POST' action='indexdottore.php'><input type='hidden' name='codice_visita' value='".$v['CodiceVisita']."' /><button class='btn btn-danger'>Cancella</button></form></td>";
+						echo "</tr>";
+
+						}
 				}
+
+				echo "</table>";
+
+				echo "<h2>Visite effettuate</h2>";
+				echo "<table class='table table-bordered'>";
+				echo "<tr><th>Data Visita</th><th>Ambulatorio</th><th>Paziente</th><th>Referto</th></tr>";
+
+				for ($i=0; $i < count($rows) ; $i++) { 
+
+					$v = $rows[$i];
+
+					if ($v['TipoPrenotazione'] == 1){ // Visite prenotate
+
+						echo "<tr>";
+						echo "<td>".$v['Data']."</td>";
+						echo "<td>".$v['NomeAmbulatorio']."</td>";
+						echo "<td><form method='GET' action='info_paziente.php'><input type='hidden' name='cf_paziente' value='".$v['CFPaziente']."'/><button class='btn btn-primary'>".$v['CFPaziente']."</button></form></td>";
+						if (isset($v['CodiceReferto'])){
+							echo "<td><form method='GET' action='info_referto.php'><input type='hidden' name='cod_referto' value='".$v['CodiceReferto']."'/><button class='btn btn-primary'>Referto n.".$v['CodiceReferto']."</button></form></td>";
+						} else {
+							echo "<td>Referto non disponibile</td>";
+						}
+					
+						
+						echo "</tr>";
+
+						}
+				}
+
+
+
+
+				echo "</table>";
 
 
 			}
