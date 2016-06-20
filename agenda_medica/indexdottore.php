@@ -13,7 +13,7 @@
 
 	} else {
 
-	if ($_SERVER['REQUEST_METHOD'] == 'POST'){
+	if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['logout-btn'])){
 
 
 		session_unset();
@@ -61,7 +61,7 @@
     <a class="navbar-brand" href="#">Agenda</a>
   </div>
   <?php echo "<p class='navbar-text'>Loggato come ".$_SESSION['username']."</p>" ?>
-  <form method='POST' action='#'><button type="submit" class="btn btn-default navbar-btn">Logout</button></form>
+  <form method='POST' action='#'><input type='hidden' name='logout-btn' value='logout'/><button type="submit" class="btn btn-default navbar-btn">Logout</button></form>
 </nav>
 
 <div class="container">

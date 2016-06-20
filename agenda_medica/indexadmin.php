@@ -2,15 +2,39 @@
 	
 	session_start();
 	include('db_config.php');
+	include('delete_functions.php');
 
-	if ($_SERVER['REQUEST_METHOD'] == 'POST'){
+
+
+
+	if ($_SERVER['REQUEST_METHOD'] == 'POST' && (isset($_POST['delete_dottore']) || isset($_POST['delete_infermiere']))){
+
+		if (isset($_POST['delete_dottore'])){
+
+			delete_dottore($_POST['delete_dottore']);
+
+		} else {
+
+			delete_infermiere($_POST['delete_infermiere']);
+
+		}
+
+		
+
+		header("Refresh:0");
+
+	} else {
+
+	if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['logout-btn'])){
 
 
 		session_unset();
 		session_destroy();
 
-		header("Location: loginadmin.php");
+		header("Location: logindadmin.php");
 		die();
+
+	}
 
 	}
 
@@ -35,7 +59,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1" />
 
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous">
-
+    <link rel="stylesheet" href="css/style.css" type="text/css"/>
     
 </head>
 
@@ -47,7 +71,7 @@
     <a class="navbar-brand" href="#">Admin</a>
   </div>
   <?php echo "<p class='navbar-text'>Loggato come ".$_SESSION['username']."</p>" ?>
-  <form method='POST' action='#'><button type="submit" class="btn btn-default navbar-btn">Logout</button></form>
+  <form method='POST' action='#'><input type='hidden' name='logout-btn' value='logout'/><button type="submit" class="btn btn-default navbar-btn">Logout</button></form>
 </nav>
 
 <div class="container">
@@ -75,6 +99,7 @@
 		echo "<tr>";
 		echo "<th> CF Dottore </th>";
 		echo "<th> Nome e Cognome </th>";
+		echo "<th> Elimina </th>";
 		echo "</tr>";
 
 		for ($i=0; $i < count($dottori); $i++) { 
@@ -82,6 +107,7 @@
 			echo "<tr>";
 			echo "<td><form action='info_dottore.php' method='GET'><input type='hidden' name='cf_dottore' value='".$dott['CodiceFiscale']."'/><button type='submit' class='btn btn-primary'>".$dott['CodiceFiscale']."</button></form></td>";
 			echo "<td>".$dott['Nome']." ".$dott['Cognome']."</td>";
+			echo "<td><form action='indexadmin.php' method='POST'><input type='hidden' name='delete_dottore' value='".$dott['CodiceFiscale']."'/><button type='submit' class='btn btn-danger'>Elimina</button></form></td>";
 			echo "</tr>";
 		}
 		
@@ -100,6 +126,7 @@
 		echo "<tr>";
 		echo "<th> CF Infermiere </th>";
 		echo "<th> Nome e Cognome </th>";
+		echo "<th> Elimina </th>";
 		echo "</tr>";
 
 		for ($i=0; $i < count($infermieri); $i++) { 
@@ -107,6 +134,7 @@
 			echo "<tr>";
 			echo "<td><form action='info_infermiere.php' method='GET'><input type='hidden' name='cf_infermiere' value='".$inf['CodiceFiscale']."'/><button type='submit' class='btn btn-primary'>".$inf['CodiceFiscale']."</button></form></td>";
 			echo "<td>".$inf['Nome']." ".$inf['Cognome']."</td>";
+			echo "<td><form action='indexadmin.php' method='POST'><input type='hidden' name='delete_infermiere' value='".$inf['CodiceFiscale']."'/><button type='submit' class='btn btn-danger'>Elimina</button></form></td>";
 			echo "</tr>";
 		}
 		

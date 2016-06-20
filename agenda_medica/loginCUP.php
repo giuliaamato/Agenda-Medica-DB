@@ -47,7 +47,7 @@
 <body>
 <nav class="navbar navbar-default">
   <div class="navbar-header">
-    <a class="navbar-brand" href="http://localhost/agenda_medica/welcomepage.html">Pagina iniziale</a>
+    <a class="navbar-brand" href="index.html">Pagina iniziale</a>
   </div>
 </nav>
 
