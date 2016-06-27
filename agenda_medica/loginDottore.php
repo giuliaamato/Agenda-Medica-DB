@@ -11,7 +11,7 @@
     $username = $_POST['username'];
     $password = $_POST['password'];
 
-    $rows = $db_conn->db_query("SELECT CodiceFiscale FROM Dottore,DatiAccesso WHERE DatiAccesso.NomeUtente='".$username."' AND DatiAccesso.Password='".$password."' AND Dottore.NomeUtente='".$username."';");
+    $rows = $db_conn->db_query("SELECT DatiAccesso.CodiceFiscale FROM Dottore,DatiAccesso WHERE DatiAccesso.NomeUtente='".$username."' AND DatiAccesso.Password='".$password."' AND Dottore.NomeUtente='".$username."';");
 
     if(count($rows) > 0){
 

@@ -11,20 +11,13 @@
 
 	}
 
-	// Funzione di cancellazione di un dottore dato il suo Codice Fiscale
-	function delete_dottore($cf_dott)
+	// Cancellazione di paziente, infermiere e dottore
+	function delete_persona($cf)
 	{
 		$conn = new DBConfig();
-		$conn->db_query("DELETE FROM Dottore WHERE CodiceFiscale='".$cf_dott."'");
+		$conn->db_query("DELETE FROM Informazioni WHERE CodiceFiscale='".$cf."'");
 	}
 
-	// Funzione di cancellazione di un infermiere
-	function delete_infermiere($cf_inf){
-
-		$conn = new DBConfig();
-		$conn->db_query("DELETE FROM Infermiere WHERE CodiceFiscale='".$cf_inf."'");
-
-	}
 
 
 

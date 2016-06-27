@@ -4,18 +4,25 @@
 	include('db_config.php');
 	include('delete_functions.php');
 
+	if (!isset($_SESSION['username']) && !$_SESSION['logged_as']=='admin'){
 
+		header("Location: loginAdmin.php");
+		die();
+
+	}
+
+	
 
 
 	if ($_SERVER['REQUEST_METHOD'] == 'POST' && (isset($_POST['delete_dottore']) || isset($_POST['delete_infermiere']))){
 
 		if (isset($_POST['delete_dottore'])){
 
-			delete_dottore($_POST['delete_dottore']);
+			delete_persona($_POST['delete_dottore']);
 
 		} else {
 
-			delete_infermiere($_POST['delete_infermiere']);
+			delete_persona($_POST['delete_infermiere']);
 
 		}
 
@@ -31,19 +38,14 @@
 		session_unset();
 		session_destroy();
 
-		header("Location: logindadmin.php");
-		die();
-
-	}
-
-	}
-
-	if (!isset($_SESSION['username']) && !$_SESSION['logged_as']='admin'){
-
 		header("Location: loginAdmin.php");
 		die();
 
 	}
+
+	}
+
+	
 
 
 
@@ -89,6 +91,16 @@
 ?>
 
 	<h2>Dottori</h2>
+
+	<form method='GET' action='new_dottore.php'>
+  			
+			<button type='submit' class='btn btn-danger'>Aggiungi un dottore</button>
+
+  	</form>
+
+  	<br />
+
+
 <?php
 
 	$dottori = $db_conn->db_query("SELECT I.CodiceFiscale,I.Nome,I.Cognome FROM Informazioni AS I INNER JOIN Dottore ON I.CodiceFiscale=Dottore.CodiceFiscale AND I.CodiceASL=".$info_ASL['Codice']."");
@@ -116,7 +128,19 @@
 
 	}
 
-	echo "<h2>Infermieri</h2>";
+	?>
+
+	<h2>Infermieri</h2>
+
+	<form method='GET' action='new_infermiere.php'>
+  			
+			<button type='submit' class='btn btn-danger'>Aggiungi un infermiere</button>
+
+  	</form>
+
+  	<br />
+
+	<?php
 
 	$infermieri = $db_conn->db_query("SELECT I.CodiceFiscale,I.Nome,I.Cognome FROM Informazioni AS I INNER JOIN Infermiere ON I.CodiceFiscale=Infermiere.CodiceFiscale AND I.CodiceASL=".$info_ASL['Codice']."");
 

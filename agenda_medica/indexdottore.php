@@ -5,31 +5,44 @@
 	include("db_config.php");
 	include("delete_functions.php");
 
-	if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['codice_visita'])){
 
-		delete_visita($_POST['codice_visita']);
+	if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['delete_paziente'])){
+
+		
+		delete_persona($_POST['delete_paziente']);
+		
 
 		header("Refresh:0");
 
 	} else {
 
-	if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['logout-btn'])){
+		if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['codice_visita'])){
+
+			delete_visita($_POST['codice_visita']);
+
+			header("Refresh:0");
+
+		} else {
+
+			if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['logout-btn'])){
 
 
-		session_unset();
-		session_destroy();
+				session_unset();
+				session_destroy();
 
-		header("Location: logindottore.php");
-		die();
+				header("Location: logindottore.php");
+				die();
 
-	}
+			}
+
+		}
 
 	}
 
 
 	if (!isset($_SESSION['username']) && !$_SESSION['logged_as']=='dottore'){
 
-		header("Location: logindottore.php");
+		header("Location: loginDottore.php");
 		die();
 
 	}
@@ -49,7 +62,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1" />
 
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous">
-
+    <link rel="stylesheet" href="css/style.css" type="text/css" />
     
 </head>
 
@@ -80,7 +93,7 @@
 
 
 
-			$rows = $db_conn->db_query("SELECT i.Nome, i.Cognome, i.Email, i.Telefono, i.CittaResidenza, a.CittaSede FROM Informazioni AS i,ASL AS a WHERE i.CodiceFiscale='".$cod_fiscale."' AND a.Codice=(SELECT CodiceASL FROM Informazioni WHERE CodiceFiscale='".$cod_fiscale."');");
+			$rows = $db_conn->db_query("SELECT i.Nome, i.Cognome, i.Email, i.Telefono, i.CittaResidenza, a.CittaSede FROM Informazioni AS i, ASL AS a WHERE i.CodiceFiscale='".$cod_fiscale."' AND a.Codice=(SELECT CodiceASL FROM Informazioni WHERE CodiceFiscale='".$cod_fiscale."');");
 
 			$persona = $rows[0];
 
@@ -192,6 +205,41 @@
 
 	</table>
 
+
+	<h1>Pazienti</h1>
+
+	<?php
+
+
+
+	$pazienti = $db_conn->db_query("SELECT I.CodiceFiscale,I.Nome,I.Cognome FROM Informazioni AS I JOIN Paziente ON I.CodiceFiscale=Paziente.CodiceFiscale AND I.CodiceASL=(SELECT CodiceASL FROM Informazioni WHERE Informazioni.CodiceFiscale='".$cod_fiscale."')");
+
+	
+
+	if (count($pazienti)>0){
+
+		echo "<table class='table table-bordered'>";
+		echo "<tr>";
+		echo "<th> CF Paziente </th>";
+		echo "<th> Nome e Cognome </th>";
+		echo "<th> Elimina </th>";
+		echo "</tr>";
+
+		for ($i=0; $i < count($pazienti); $i++) { 
+			$p = $pazienti[$i];
+			echo "<tr>";
+			echo "<td><form action='info_paziente.php' method='GET'><input type='hidden' name='cf_paziente' value='".$p['CodiceFiscale']."'/><button type='submit' class='btn btn-primary'>".$p['CodiceFiscale']."</button></form></td>";
+			echo "<td>".$p['Nome']." ".$p['Cognome']."</td>";
+			echo "<td><form action='indexdottore.php' method='POST'><input type='hidden' name='delete_paziente' value='".$p['CodiceFiscale']."'/><button type='submit' class='btn btn-danger'>Elimina</button></form></td>";
+			echo "</tr>";
+		}
+		
+		echo "</table>";
+
+
+	}
+
+	?>
 
 
 </div>

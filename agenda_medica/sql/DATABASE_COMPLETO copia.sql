@@ -80,45 +80,41 @@ CREATE TABLE CUP (
 
 CREATE TABLE DatiAccesso (
 
-	NomeUtente VARCHAR(20) NOT NULL PRIMARY KEY,
+	CodiceFiscale VARCHAR(16) NOT NULL PRIMARY KEY,
+	NomeUtente VARCHAR(20) NOT NULL UNIQUE,
 	Password VARCHAR(20) NOT NULL,
-	DataScadenza DATE NOT NULL
-
+	DataScadenza DATE NOT NULL,
+	
+	FOREIGN KEY (CodiceFiscale) REFERENCES Informazioni(CodiceFiscale)
+		ON DELETE CASCADE
 
 )ENGINE=INNODB;
 
 
 CREATE TABLE Admin (
 
-	CodiceFiscale VARCHAR(16) NOT NULL,
+	CodiceFiscale VARCHAR(16) NOT NULL PRIMARY KEY,
 	NomeUtente VARCHAR(20) NOT NULL,
 	Stipendio SMALLINT NOT NULL,
 
-	PRIMARY KEY (CodiceFiscale,NomeUtente),
-
 	FOREIGN KEY (CodiceFiscale) REFERENCES Informazioni(CodiceFiscale)
-		ON DELETE CASCADE,
-	FOREIGN KEY (NomeUtente) REFERENCES DatiAccesso(NomeUtente)
-		ON UPDATE CASCADE
+		ON DELETE CASCADE
 
 
 ) ENGINE=INNODB;
 
 CREATE TABLE Dottore (
 
-	CodiceFiscale VARCHAR(16) NOT NULL,
+	CodiceFiscale VARCHAR(16) NOT NULL PRIMARY KEY,
 	NomeUtente VARCHAR(20) NOT NULL,
 	Stipendio SMALLINT NOT NULL,
 	Specializzazione VARCHAR(30) NOT NULL,
 	OraInizio TIME NOT NULL,
 	OraFine TIME NOT NULL,
 	Disponibile BOOL NOT NULL,
-
-	PRIMARY KEY (CodiceFiscale,NomeUtente),
+	
 	FOREIGN KEY (CodiceFiscale) REFERENCES Informazioni(CodiceFiscale)
-		ON DELETE CASCADE,
-	FOREIGN KEY (NomeUtente) REFERENCES DatiAccesso(NomeUtente)
-		ON UPDATE CASCADE
+		ON DELETE CASCADE
 
 
 ) ENGINE=INNODB;
@@ -8288,8 +8284,7 @@ INSERT INTO ASL (Indirizzo,Email,Telefono,CittaSede) VALUES
 	("Viale Valverde 42","veneto4@asl.it","0458075511","Verona"),
 	("Viale Europa 22","veneto5@asl.it","0437516111","Belluno"),
 	("P.zza Ospedale 1","veneto6@asl.it","0422322111","Treviso"),
-	("Viale Tre Martiri 89","veneto7@asl.it","04253931","Rovigo"),
-	("Viale Vespucci 12","veneto8@asl.it","0415572211","Chioggia");
+	("Viale Tre Martiri 89","veneto7@asl.it","04253931","Rovigo");
 
 INSERT INTO CUP (Codice,Password,CodiceASL) VALUES
 
@@ -8299,8 +8294,7 @@ INSERT INTO CUP (Codice,Password,CodiceASL) VALUES
 	("CVERONA03","cupverona",4),
 	("CBELLUNO04","cupbelluno",5),
 	("CTREVISO05","cuptreviso",6),
-	("CROVIGO06","cuprovigo",7),
-	("CCHIOGGIA07","cupchioggia",8);
+	("CROVIGO06","cuprovigo",7);
 
 INSERT INTO Informazioni(CodiceFiscale,DataNascita,Nome,Cognome,Email,Sesso,Telefono,CittaResidenza,CittaNascita,Indirizzo,CodiceASL) VALUES
 ('NRNMRA70S55D674C','1970-11-15','Maria','Nerini','marianerini48@aruba.it','F','0422152227','Fontanelle','Baratili San Pietro','ponte Giuseppe Garibaldi',6),
@@ -8496,7 +8490,6 @@ INSERT INTO Informazioni(CodiceFiscale,DataNascita,Nome,Cognome,Email,Sesso,Tele
 ('BNCPLA75E64E936W','1975-5-24','Paola','Bianchi','paolabianchi51@libero.it','F','041553686','Marcon','Filottrano','viale Olimpia',3),
 ('ESPNMO68S53I531Q','1968-11-13','Noemi','Esposito','noemiesposito29@yahoo.it','F','0444585468','Schio','Costigliole d''Asti','Via Ercole Smaniotto',1), 
 ('BRTSST61L27B196I','27-7-1961','Sisto','Bertelli','sistobertelli41@yahoo.it','M','0444800458','Brogliano','Miglionico','vicolo del Vento',1),
-('DDDFRN73P68F957J','28-9-1973','Francesca','Daddario','francescadaddario79@gmail.com','F','0444952884','Nove','Cisterna d''Asti','via Bergamasco',8),
 ('NNNTDD55S17A061B','17-11-1955','Taddeo','Nenni','taddeonenni78@yahoo.it','M','045750312','Affi','Strongoli','via Vito Rapisardi',4),
 ('BLTSML50P06H280U','6-9-1950','Samuele','Bialetti','samuelebialetti86@yahoo.it','M','0422883900','Riese Pio X','Roccapalumba','viale Francia',5),
 ('FLRLCU72T56F394H','16-12-1972','Lucia','Falerno','luciafalerno38@gmail.com','F','049618999','Montagnana','San Costanzo','via Castelmenardo',2),
@@ -8554,54 +8547,54 @@ INSERT INTO Dottore (CodiceFiscale, NomeUtente, Stipendio, Specializzazione, Ora
 ('CNDNDA32S60A292O',    'nadiacandi32',         41231, 'Cardiologia',     '13:30:00', '15:30:00', 1),
 ('FLSNCC75C22H117L',    'niccolofalsetti75',    31113, 'Ortopedia',       '09:30:00', '13:30:00', 1);
 
-INSERT INTO DatiAccesso(NomeUtente, Password, DataScadenza) VALUES
-('marianerini70', 'HD5W75MY', '2016-10-01'),
-('quintobada53', 'R253ZDJB', '2016-10-01'),
-('niccolovasta40', 'ILWC80XP', '2016-10-01'),
-('giuseppeoppizi37', '91B6EGDR', '2016-10-01'),
-('niccolocaffarelli56', 'TXNLA3EH', '2016-10-01'),
-('rachelezecca69', 'EHGUBZ9N', '2016-10-01'),
-('doroteasanna40', '582RVS59', '2016-10-01'),
-('primovecchiettini76', '40LDUP2H', '2016-10-01'),
-('larabaglieri73', 'C5GLKNQ5', '2016-10-01'),
-('paolavanna88', 'DQXBSM41', '2016-10-01'),
-('chiaraalioti76', 'ZNA3PW6X', '2016-10-01'),
-('inessanson37', 'XAGI8JIW', '2016-10-01'),
-('orazioangelozzi44', 'JZOAKEYI', '2016-10-01'),
-('niccologeroni65', '1HFALQE3', '2016-10-01'),
-('robertamagotti35', 'QSDSDNGL', '2016-10-01'),
-('giuseppeottieri69', 'P8DBJUS0', '2016-10-01'),
-('torquatoganino41', '46AKQZ16', '2016-10-01'),
-('tatianaortu86', 'JO89PB3W', '2016-10-01'),
-('matteooppus55', 'XA45YHPW', '2016-10-01'),
-('giovanniadami76', 'HB51VWT6', '2016-10-01'),
-('ornellasantamaria64', '2896SL91', '2016-10-01'),
-('floramicarelli84', 'H6C4DD25', '2016-10-01'),
-('nicolaferragotti77', 'PZLYI1X1', '2016-10-01'),
-('doroteabeghi58', 'LG3JSYLU', '2016-10-01'),
-('sabrinavellotta73', 'H9AUGUOH', '2016-10-01'),
-('nadiaverducci36', 'ABPWYZO2', '2016-10-01'),
-('elenaverino77', 'GHSFD6A7', '2016-10-01'),
-('matteomatarazzo63', 'OA7YHZ1F', '2016-10-01'),
-('raimondoventurato55', 'X4Y2D1FL', '2016-10-01'),
-('beatriceeberto34', 'PYJIDFC5', '2016-10-01'),
-('rachelefagiano40', 'JA5FR7JL', '2016-10-01'),
-('giuseppeflorian64', 'LWE4ST4L', '2016-10-01'),
-('tatianavendittis70', 'UC109G01', '2016-10-01'),
-('diegofalanga88', 'QTJCSQ5P', '2016-10-01'),
-('inesfassa61', 'PRS4SXNC', '2016-10-01'),
-('giuliaannunzio75', '8GT0FQ4X', '2016-10-01'),
-('nadiaasperina65', 'GVZHHP17', '2016-10-01'),
-('sebastianovallorin43', 'PLJMLYE6', '2016-10-01'),
-('nadiacandi32', 'ZB7ZS6X0', '2016-10-01'),
-('niccolofalsetti75', '2BYMIU1F', '2016-10-01'),
-('sistobertelli61', 'admin1', '2016-10-01'),
-('fradaddario73', 'admin2', '2016-10-01'),
-('taddeonenni55', 'admin3', '2016-10-01'),
-('samubialetti50', 'admin4', '2016-10-01'),
-('luciafalerno72', 'admin5', '2016-10-01'),
-('tofarno89', 'admin6', '2016-10-01'),
-('taddeobaghi86', 'admin7', '2016-10-01');
+INSERT INTO DatiAccesso(CodiceFiscale,NomeUtente, Password, DataScadenza) VALUES
+('NRNMRA70S55D674C','marianerini70', 'HD5W75MY', '2016-10-01'),
+('BDLQNT53L28H655N','quintobada53', 'R253ZDJB', '2016-10-01'),
+('VSTNCC40M15I008B','niccolovasta40', 'ILWC80XP', '2016-10-01'),
+('OPPGSP37D03H220B','giuseppeoppizi37', '91B6EGDR', '2016-10-01'),
+('CFFNCC56P12B128P','niccolocaffarelli56', 'TXNLA3EH', '2016-10-01'),
+('ZCCRCH69B66A377F','rachelezecca69', 'EHGUBZ9N', '2016-10-01'),
+('SNNDRT40P43H705F','doroteasanna40', '582RVS59', '2016-10-01'),
+('VCCPRM76D25F962I','primovecchiettini76', '40LDUP2H', '2016-10-01'),
+('BGLLRA73T50L736L','larabaglieri73', 'C5GLKNQ5', '2016-10-01'),
+('VNNPLA88C50H655K','paolavanna88', 'DQXBSM41', '2016-10-01'),
+('ALTCHR76C62H280W','chiaraalioti76', 'ZNA3PW6X', '2016-10-01'),
+('SNSINS37M69H706Z','inessanson37', 'XAGI8JIW', '2016-10-01'),
+('ANGORZ44D30D107M','orazioangelozzi44', 'JZOAKEYI', '2016-10-01'),
+('GRNNCC65A09A161W','niccologeroni65', '1HFALQE3', '2016-10-01'),
+('MGTRBR35S53F009F','robertamagotti35', 'QSDSDNGL', '2016-10-01'),
+('OTTGSP69E21H220D','giuseppeottieri69', 'P8DBJUS0', '2016-10-01'),
+('GNNTRQ41M26G963U','torquatoganino41', '46AKQZ16', '2016-10-01'),
+('ORTTTN86S61A302N','tatianaortu86', 'JO89PB3W', '2016-10-01'),
+('OPPMTT55M03G981I','matteooppus55', 'XA45YHPW', '2016-10-01'),
+('ADMGVN76A28I347L','giovanniadami76', 'HB51VWT6', '2016-10-01'),
+('SNTORN64D58D161D','ornellasantamaria64', '2896SL91', '2016-10-01'),
+('MCRFLR84A49B582A','floramicarelli84', 'H6C4DD25', '2016-10-01'),
+('FRGNCL77E30F011O','nicolaferragotti77', 'PZLYI1X1', '2016-10-01'),
+('BGHDRT58D42B844T','doroteabeghi58', 'LG3JSYLU', '2016-10-01'),
+('VLLSBR73E55F092X','sabrinavellotta73', 'H9AUGUOH', '2016-10-01'),
+('VRDNDA36S62H594Y','nadiaverducci36', 'ABPWYZO2', '2016-10-01'),
+('VRNELN77S63D942B','elenaverino77', 'GHSFD6A7', '2016-10-01'),
+('MTRMTT63D19D118Q','matteomatarazzo63', 'OA7YHZ1F', '2016-10-01'),
+('VNTRMN55A25I938C','raimondoventurato55', 'X4Y2D1FL', '2016-10-01'),
+('EBRBTR34E41L890K','beatriceeberto34', 'PYJIDFC5', '2016-10-01'),
+('FGNRCH40L63G673Z','rachelefagiano40', 'JA5FR7JL', '2016-10-01'),
+('FLRGSP64H25C500I','giuseppeflorian64', 'LWE4ST4L', '2016-10-01'),
+('VNDTTN70P46A434Q','tatianavendittis70', 'UC109G01', '2016-10-01'),
+('FLNDGI88H12D161Z','diegofalanga88', 'QTJCSQ5P', '2016-10-01'),
+('FSSINS61T66I879N','inesfassa61', 'PRS4SXNC', '2016-10-01'),
+('ANNGLI75B70B912K','giuliaannunzio75', '8GT0FQ4X', '2016-10-01'),
+('ASPNDA65A64I373P','nadiaasperina65', 'GVZHHP17', '2016-10-01'),
+('VLLSBS43C25B493L','sebastianovallorin43', 'PLJMLYE6', '2016-10-01'),
+('CNDNDA32S60A292O','nadiacandi32', 'ZB7ZS6X0', '2016-10-01'),
+('FLSNCC75C22H117L','niccolofalsetti75', '2BYMIU1F', '2016-10-01'),
+('BRTSST61L27B196I','sistobertelli61', 'admin1', '2016-10-01'),
+('DDDFRN73P68F957J','fradaddario73', 'admin2', '2016-10-01'),
+('NNNTDD55S17A061B','taddeonenni55', 'admin3', '2016-10-01'),
+('BLTSML50P06H280U','samubialetti50', 'admin4', '2016-10-01'),
+('FLRLCU72T56F394H','luciafalerno72', 'admin5', '2016-10-01'),
+('FRNTRQ89D11C630U','tofarno89', 'admin6', '2016-10-01'),
+('BGHTDD86M26G875B','taddeobaghi86', 'admin7', '2016-10-01');
 
 
 INSERT INTO Infermiere (CodiceFiscale,Stipendio,Tirocinante) VALUES
@@ -8788,36 +8781,36 @@ INSERT INTO Referto(Codice, Contenuto) VALUES
 (23, "Si segnala agli esami del sangue importante rialzo della viremia collegata all''HCV. Visto tale rialzo si richiede visita urologica. Ritengo inoltre indicato stretto mornitoraggio dell''eventuale rialzo dell''alfafetoproteina.");
 
 INSERT INTO VisitaMedica(CodiceVisita, Data, NomeAmbulatorio, TipoVisita, TipoPrenotazione, Priorita, CFdottore, CFinfermiere, CFpaziente, CodiceReferto) VALUES
-(1, '2016-03-10 14:45:00', 'BP003',1, 1,'M','MTRMTT63D19D118Q', 'NVNGLI87R41C383T', 'NGRALB80D24B578M', 1),
-(2, '2016-03-11 09:45:00', 'CZ002', 1, 1, 'L', 'OTTGSP69E21H220D', 'MTRQNT77H05B154Y', 'DMCRGN75H70L026P', 2),
-(3, '2016-04-10 10:55:00', 'AV002', 0, 1, 'L', 'ANGORZ44D30D107M', NULL, 'ORLGVN83E03D506A', 3),
-(4, '2016-05-01 12:30:00', 'AV002', 0, 1, 'L', 'ANGORZ44D30D107M', 'MTRQNT77H05B154Y', 'ORLGVN83E03D506A', 4),
+(1, '2016-03-10 14:45:00', 'BP003',1, 1,'M','MTRMTT63D19D118Q', 'NVNGLI87R41C383T', 'SRTRBC47T67H606W', 1),
+(2, '2016-03-11 09:45:00', 'CZ002', 1, 1, 'L', 'OTTGSP69E21H220D', 'MTRQNT77H05B154Y', 'VTLSLV68T24E092N', 2),
+(3, '2016-04-10 10:55:00', 'AV002', 0, 1, 'L', 'ANGORZ44D30D107M', NULL, 'CSTORN50T65A236L', 3),
+(4, '2016-05-01 12:30:00', 'AV002', 0, 1, 'L', 'ANGORZ44D30D107M', 'MTRQNT77H05B154Y', 'DNTOLV68H60E762W', 4),
 (5, '2016-05-01 10:30:00', 'CZ002', 1, 1, 'L', 'OTTGSP69E21H220D', 'LZZFLR65B43H594B', 'PGNSTF01L60F116W', 5),
-(6, '2016-05-04 11:20:00', 'CZ002', 0, 1, 'L', 'OTTGSP69E21H220D', 'RNDRGG88S29D794J', 'DMCRGN75H70L026P', 6),
-(7, '2016-05-05 14:30:00', 'AB003', 1, 1, 'L', 'BGLLRA73T50L736L', 'ACTALS43M12C146S', 'MLNDLT24M60F465M', 7),
-(8, '2016-05-05 14:08:00', 'CA005', 1, 1, 'L', 'MCRFLR84A49B582A', 'SNTBND66D47L402S', 'CSTORN50T65A236L', 8),
-(9, '2016-05-06 13:40:00', 'BC004', 1, 1, 'L', 'ADMGVN76A28I347L', 'CRLDLT57M60D741R', 'NRERML88B11B563R',9),
+(6, '2016-05-04 11:20:00', 'CZ002', 0, 1, 'L', 'OTTGSP69E21H220D', 'RNDRGG88S29D794J', 'PRSRBC66C69H843L', 6),
+(7, '2016-05-05 14:30:00', 'AB003', 1, 1, 'L', 'BGLLRA73T50L736L', 'ACTALS43M12C146S', 'FRRRME55P22I242X', 7),
+(8, '2016-05-05 14:08:00', 'CA005', 1, 1, 'L', 'MCRFLR84A49B582A', 'SNTBND66D47L402S', 'DMCRGN75H70L026P', 8),
+(9, '2016-05-06 13:40:00', 'BC004', 1, 1, 'L', 'ADMGVN76A28I347L', 'CRLDLT57M60D741R', 'BLLRSR26R29A982H',9),
 (10, '2016-05-06 10:10:00', 'OT220', 1, 1, 'L', 'FLSNCC75C22H117L', 'CCCRCH71E42I425F', 'SRTRBC47T67H606W', 10),
-(11, '2016-05-06 14:15:00', 'AP003', 1, 1, 'L', 'VNTRMN55A25I938C', 'VNDANG52B57B835Z', 'BTTRMN45P08F922U', 11),
-(12, '2016-05-06 09:40:00', 'AB001', 1, 1, 'M', 'OPPMTT55M03G981I', 'FTTELN77H58E358Q', 'VTLSLV68T24E092N', 12),
-(13, '2016-05-06 14:30:00', 'BP003', 1, 1, 'L', 'MTRMTT63D19D118Q', 'SRNGSP45T12I418X', 'PRSRBC66C69H843L', 13),
-(14, '2016-05-07 10:05:00', 'AP005', 1, 1, 'L', 'VLLSBR73E55F092X', 'BLDTTN74M44B433G', 'DNTOLV68H60E762W', 14),
-(15, '2016-05-07 09:45:00', 'AP001', 1, 1, 'L', 'BDLQNT53L28H655N', 'VRTALB72D16C815T', 'RVIIGN83R27A444Z', 15),
-(16, '2016-05-07 10:05:00', 'AP001', 1, 1, 'L', 'BDLQNT53L28H655N', 'VRTALB72D16C815T', 'BSLBTR55M45B143P', 16),
-(17, '2016-05-07 10:30:00', 'AP001', 1, 1, 'L', 'BDLQNT53L28H655N', 'VRTALB72D16C815T', 'BLLRSR26R29A982H', 17),
-(18, '2016-05-07 14:05:00', 'CA003', 1, 1, 'M', 'FGNRCH40L63G673Z', 'VNTLRA83L66L892R', 'FRRRME55P22I242X', 18),
-(19, '2016-05-07 14:10:00', 'AP002', 1, 1, 'L', 'VCCPRM76D25F962I', 'NPLRBR86C15G943H', 'DRSSBR79M64I107Z', 19),
-(20, '2016-05-10 15:10:00', 'AP002', 0, 1, 'L', 'VCCPRM76D25F962I', 'SNTIRN64R69L396Z', 'DRSSBR79M64I107Z', 20),
+(11, '2016-05-06 14:15:00', 'AP003', 1, 1, 'L', 'VNTRMN55A25I938C', 'VNDANG52B57B835Z', 'FRIRCH25R48C812Q', 11),
+(12, '2016-05-06 09:40:00', 'AB001', 1, 1, 'M', 'OPPMTT55M03G981I', 'FTTELN77H58E358Q', 'FRRRME55P22I242X', 12),
+(13, '2016-05-06 14:30:00', 'BP003', 1, 1, 'L', 'MTRMTT63D19D118Q', 'SRNGSP45T12I418X', 'ORLGVN83E03D506A', 13),
+(14, '2016-05-07 10:05:00', 'AP005', 1, 1, 'L', 'VLLSBR73E55F092X', 'BLDTTN74M44B433G', 'DRSSBR79M64I107Z', 14),
+(15, '2016-05-07 09:45:00', 'AP001', 1, 1, 'L', 'BDLQNT53L28H655N', 'VRTALB72D16C815T', 'PLLANT28E19I938W', 15),
+(16, '2016-05-07 10:05:00', 'AP001', 1, 1, 'L', 'BDLQNT53L28H655N', 'VRTALB72D16C815T', 'PLLANT28E19I938W', 16),
+(17, '2016-05-07 10:30:00', 'AP001', 1, 1, 'L', 'BDLQNT53L28H655N', 'VRTALB72D16C815T', 'SLAPLA67D50L270Y', 17),
+(18, '2016-05-07 14:05:00', 'CA003', 1, 1, 'M', 'FGNRCH40L63G673Z', 'VNTLRA83L66L892R', 'GLNPTR01C03E008A', 18),
+(19, '2016-05-07 14:10:00', 'AP002', 1, 1, 'L', 'VCCPRM76D25F962I', 'NPLRBR86C15G943H', 'NRERML88B11B563R', 19),
+(20, '2016-05-10 15:10:00', 'AP002', 0, 1, 'L', 'VCCPRM76D25F962I', 'SNTIRN64R69L396Z', 'NRERML88B11B563R', 20),
 (21, '2016-05-10 14:10:00', 'AP003', 1, 1, 'L', 'VNTRMN55A25I938C', 'NGRORN50C56E588V', 'FRIRCH25R48C812Q', 21),
-(22, '2016-05-11 09:45:00', 'CZ001', 1, 1, 'L', 'ALTCHR76C62H280W', 'VNTTRS68M12C461Q', 'RZZSLV11M61A627C', 22),
-(23, '2016-05-11 10:15:00', 'AP001', 1, 1, 'L', 'BDLQNT53L28H655N', 'GLMANG41T65C577W', 'CRBRBR83E14D686I', 23),
-(24, '2016-06-10 10:00:00', 'CZ005', 1, 0, 'L', 'OPPGSP37D03H220B', NULL, 'CRBRBR83E14D686I', NULL),
-(25, '2016-06-10 13:30:00', 'AP004', 1, 0, 'L', 'VNDTTN70P46A434Q', NULL, 'FRIRCH25R48C812Q', NULL),
-(26, '2016-06-10 13:30:00', 'UR520', 1, 0, 'L', 'ANNGLI75B70B912K', NULL, 'MRTSML96A10D549L', NULL),
-(27, '2016-06-11 14:00:00', 'CZ002', 0, 0, 'L', 'OTTGSP69E21H220D', NULL, 'DMCRGN75H70L026P', NULL),
-(28, '2016-06-11 09:30:00', 'AB002', 0, 0, 'L', 'OPPMTT55M03G981I', NULL, 'VTLSLV68T24E092N', NULL),
-(29, '2016-06-12 14:00:00', 'BC004', 0, 0, 'L', 'ADMGVN76A28I347L', NULL, 'NRERML88B11B563R', NULL),
-(30, '2016-06-12 14:30:00', 'CA005', 1, 0, 'L', 'MCRFLR84A49B582A', NULL, 'BRNTDD61P17C225V', NULL);
+(22, '2016-05-11 09:45:00', 'CZ001', 1, 1, 'L', 'ALTCHR76C62H280W', 'VNTTRS68M12C461Q', 'CNTRGN61M64B061E', 22),
+(23, '2016-05-11 10:15:00', 'AP001', 1, 1, 'L', 'BDLQNT53L28H655N', 'GLMANG41T65C577W', 'PLMMRT70M43L979V', 23),
+(24, '2016-06-10 10:00:00', 'CZ005', 1, 0, 'L', 'OPPGSP37D03H220B', NULL, 'BRNRFF83S60A302V', NULL),
+(25, '2016-06-10 13:30:00', 'AP004', 1, 0, 'L', 'VNDTTN70P46A434Q', NULL, 'SLAPLA67D50L270Y', NULL),
+(26, '2016-06-10 13:30:00', 'UR520', 1, 0, 'L', 'ANNGLI75B70B912K', NULL, 'SLAPLA67D50L270Y', NULL),
+(27, '2016-06-11 14:00:00', 'CZ002', 0, 0, 'L', 'OTTGSP69E21H220D', NULL, 'BNCMRT87L48I417P', NULL),
+(28, '2016-06-11 09:30:00', 'AB002', 0, 0, 'L', 'OPPMTT55M03G981I', NULL, 'FRRRME55P22I242X', NULL),
+(29, '2016-06-12 14:00:00', 'BC004', 0, 0, 'L', 'ADMGVN76A28I347L', NULL, 'LMBPLA06A58L040G', NULL),
+(30, '2016-06-12 14:30:00', 'CA005', 1, 0, 'L', 'MCRFLR84A49B582A', NULL, 'DMCRGN75H70L026P', NULL);
 
 INSERT INTO Ambulatorio (Nome,CodiceASL) VALUES 
 ('AV001',1),
@@ -8860,17 +8853,5 @@ INSERT INTO Ambulatorio (Nome,CodiceASL) VALUES
 ('PL003',8),
 ('PL004',8),
 ('PL005',8);
-
-DELIMITER $$
-DROP IF EXISTS TRIGGER cancella_accesso $$
-CREATE TRIGGER cancella_accesso
- BEFORE DELETE ON Dottore
- FOR EACH ROW
- BEGIN
- 	DELETE FROM DatiAccesso 
- 	WHERE NomeUtente=OLD.NomeUtente;
- END $$
-DELIMITER;
-
 
 SET FOREIGN_KEY_CHECKS=1;
