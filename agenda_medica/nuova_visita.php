@@ -5,6 +5,8 @@
 	include("db_config.php");
 
 
+
+
 	if (!isset($_SESSION['username']) && !$_SESSION['logged_as']=='dottore'){
 
 		header("Location: logindottore.php");
@@ -12,7 +14,22 @@
 
 	}
 
+  function get_all_days($month,$cur_day){
 
+    $list = array();
+    $year = 2016;
+    
+    
+    for($d=$cur_day; $d<=31; $d++){
+      $time=mktime(12, 0, 0, $month, $d, $year);          
+      if (date('m', $time)==$month){       
+        $list[]=date('Y-m-d', $time);
+      }
+    }
+
+    return $list;
+
+  }
 
 ?>
 
@@ -79,13 +96,21 @@
         						
         						$infermiere = $rows[$i];
 
+                    $res = $db_conn->db_query("SELECT Conta_Visite('".$infermiere['CodiceFiscale']."') AS num_visite");
+
+                    $numero_visite = $res[0]['num_visite'];
+
+                    if (!isset($numero_visite)){
+                      $numero_visite = 0;
+                    }
+
                     if ($infermiere['Tirocinante'] == 0){
                       $t = "Non tirocinante";
                     } else {
                       $t = "Tirocinante";
                     }
 
-        						echo "<option>".$infermiere['CodiceFiscale']." - ".$infermiere['Nome']." ".$infermiere['Cognome']." - ".$t."</option>";
+        						echo "<option>".$infermiere['CodiceFiscale']." - ".$infermiere['Nome']." ".$infermiere['Cognome']." - ".$t." - ".$numero_visite." visite effettuate</option>";
 
 
         					}
@@ -118,45 +143,46 @@
       			</div>
 			</div>
   		</div>
+      <div class="form-group row">
+          <label for="date-select" class="col-sm-2">Giorni disponibili</label>
+          <div class="col-sm-10">
+            <select id="date-select" class="form-control" onchange='get_ambulatori(this.value)'>
+              <?php 
+
+                // ottieni le date disponbili
+                $days = get_all_days("06",date("d"));
+
+                
+
+                for ($i=0; $i < count($days); $i++) { 
+                  echo "<option>".$days[$i]."</option>";
+                }
+                    
+                if (count($days) < 15){
+                  $days_next_month = get_all_days("07",1);
+                  for ($i=0; $i < count($days_next_month); $i++) { 
+                  echo "<option>".$days_next_month[$i]."</option>";
+                }
+
+                }
+
+
+
+
+              ?>
+            </select>
+          </div>
+      </div>
  
  		<div class="form-group row">
-      		<label for="disabledSelect" class="col-sm-2">Ambulatorio</label>
+      		<label for="ambulatorio" class="col-sm-2">Ambulatorio</label>
       		<div class="col-sm-10">
-      			<select id="disabledSelect" class="form-control">
-        			<?php 
-
-        				// ottieni gli ambulatori disponibili
-
-
-        						echo "<option>$nome_ambulatorio</option>"; 
-
-
-
-
-
-        			?>
+      			<select id="ambulatorio" class="form-control">
+        			
       			</select>
       		</div>
     	</div>
-    	<div class="form-group row">
-      		<label for="disabledSelect" class="col-sm-2">Data</label>
-      		<div class="col-sm-10">
-      			<select id="disabledSelect" class="form-control">
-        			<?php 
-
-        				// ottieni le date disponbili
-
-
-        						echo "<option>$nome_ambulatorio</option>"; 
-
-
-
-
-
-        			?>
-      			</select>
-      		</div>
-    	</div>
+    	
 
     	<button type="submit" class="btn btn-primary">Inserisci nuova visita</button>
     	
@@ -165,6 +191,28 @@
 
 
 </div>
+<script type="text/javascript">
+  
+function get_ambulatori(data){
+
+      var xhttp = new XMLHttpRequest();
+
+      xhttp.onreadystatechange = function(){
+
+        if (xhttp.readyState == 4 && xhttp.status == 200){
+          document.getElementById('ambulatorio').innerHTML = xhttp.responseText;
+        }
+      };
+      xhttp.open("GET",'get_ambulatori_disponibili.php?s='+data);
+      xhttp.send();
+
+  }
+
+  
+
+
+
+</script>
 <script src="//code.jquery.com/jquery-1.11.0.min.js"></script>
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js" integrity="sha384-0mSbJDEHialfmuBBQP6A4Qrprq5OVfW37PRR3j5ELqxss1yVqOtnepnHVP9aJ7xS" crossorigin="anonymous"></script>
 </body>
