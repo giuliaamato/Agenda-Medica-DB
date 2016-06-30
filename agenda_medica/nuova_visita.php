@@ -14,6 +14,9 @@
 
 	}
 
+  setcookie("cf_dottore",$_SESSION['codice_fiscale'], time()+31536000);
+
+
   function get_all_days($month,$cur_day){
 
     $list = array();
@@ -63,11 +66,30 @@
 	<form method='POST' action='#'>
 
 		<div class="form-group row">
-    		<label for="CFPaziente" class="col-sm-2 form-control-label">CF Paziente</label>
-    		<div class="col-sm-10">
-      		<input class="form-control" id="CFPaziente" placeholder="Codice Fiscale Paziente">
-    		</div>
-    	</div>
+          <label for="paziente" class="col-sm-2">Paziente</label>
+          <div class="col-sm-10">
+            <select id="paziente" class="form-control">
+              <?php 
+
+                $db_conn = new DBConfig();
+
+                $res = $db_conn->db_query("SELECT Informazioni.CodiceFiscale,Informazioni.Nome,Informazioni.Cognome FROM Paziente JOIN Informazioni ON Paziente.CodiceFiscale=Informazioni.CodiceFiscale WHERE Informazioni.CodiceASL=(SELECT CodiceASL FROM Informazioni WHERE CodiceFiscale='".$_SESSION['codice_fiscale']."')");
+
+
+                for ($i=0; $i < count($res); $i++) { 
+                  
+                  $paziente = $res[$i];
+
+                  echo "<option>".$paziente['CodiceFiscale']." - ".$paziente["Nome"]." ".$paziente['Cognome']."</option>";
+
+
+                }
+
+
+              ?>
+            </select>
+          </div>
+      </div>
  		<fieldset disabled>
     	<div class="form-group row">
     		<label for="CFDottore" class="col-sm-2 form-control-label">CF Dottore</label>
@@ -83,7 +105,7 @@
         			<?php 
 
         				// ottieni gli infermieri disponibili
-        				$db_conn = new DBConfig();
+        				
 
         				$rows = $db_conn->db_query("SELECT Informazioni.Nome,Informazioni.Cognome,Infermiere.CodiceFiscale, Infermiere.Tirocinante FROM Infermiere JOIN Informazioni ON Infermiere.CodiceFiscale=Informazioni.CodiceFiscale WHERE Informazioni.CodiceASL=(SELECT CodiceASL FROM Informazioni WHERE CodiceFiscale='".$_SESSION['codice_fiscale']."')");
 
@@ -143,16 +165,43 @@
       			</div>
 			</div>
   		</div>
+     
+      <div class="form-group row">
+          <label for="ora_select" class="col-sm-2">Orari disponibili</label>
+          <div class="col-sm-10">
+            <select id="ora_select" class="form-control">
+              <?php 
+
+                $res1 = $db_conn->db_query("SELECT OraInizio('".$_SESSION['codice_fiscale']."') AS OraInizio");
+                $res2 = $db_conn->db_query("SELECT OraFine('".$_SESSION['codice_fiscale']."') AS OraFine");
+
+
+
+                $oraCorrente = new DateTime($res1[0]['OraInizio']);
+                $oraFine = new DateTime($res2[0]['OraFine']) ;
+
+                while ($oraFine > $oraCorrente){
+                  echo "<option>".$oraCorrente->format('H:i:s')."</option>";
+                  date_add($oraCorrente, date_interval_create_from_date_string('30 min'));
+                }
+
+
+              ?>
+            </select>
+          </div>
+      </div>
       <div class="form-group row">
           <label for="date-select" class="col-sm-2">Giorni disponibili</label>
           <div class="col-sm-10">
-            <select id="date-select" class="form-control" onchange='get_ambulatori(this.value)'>
-              <?php 
+            
+
+            <select id='date-select' class='form-control' onchange='get_ambulatori(this.value,ora_select.value)'>
+            <?php   
 
                 // ottieni le date disponbili
                 $days = get_all_days("06",date("d"));
 
-                
+                echo "<option> - </option>";
 
                 for ($i=0; $i < count($days); $i++) { 
                   echo "<option>".$days[$i]."</option>";
@@ -192,8 +241,26 @@
 
 </div>
 <script type="text/javascript">
+
+function getCookie(cname) {
+    var name = cname + "=";
+    var ca = document.cookie.split(';');
+    for(var i = 0; i <ca.length; i++) {
+        var c = ca[i];
+        while (c.charAt(0)==' ') {
+            c = c.substring(1);
+        }
+        if (c.indexOf(name) == 0) {
+            return c.substring(name.length,c.length);
+        }
+    }
+    return "";
+}
+
   
-function get_ambulatori(data){
+function get_ambulatori(data,ora){
+
+      var cf = getCookie("cf_dottore");
 
       var xhttp = new XMLHttpRequest();
 
@@ -202,8 +269,10 @@ function get_ambulatori(data){
         if (xhttp.readyState == 4 && xhttp.status == 200){
           document.getElementById('ambulatorio').innerHTML = xhttp.responseText;
         }
+      
       };
-      xhttp.open("GET",'get_ambulatori_disponibili.php?s='+data);
+      
+      xhttp.open("GET",'get_ambulatori_disponibili.php?s='+data+'&o='+ora+'&cf='+cf);
       xhttp.send();
 
   }

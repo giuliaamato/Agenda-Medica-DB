@@ -7,11 +7,12 @@
 include("db_config.php");
 
 $option = $_GET['s'];
-
+$option2 = $_GET['o'];
+$cf = $_GET['cf'];
 
 $conn = new DBConfig();
 
-$rows = $conn->db_query("CALL ambulatori_disp('".$option."','".$_SESSION['codice_fiscale']."')");
+$rows = $conn->db_query("CALL ambulatori_disp('".$option."','".$option2."','".$cf."')");
 
 
 
