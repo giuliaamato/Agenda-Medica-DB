@@ -25,6 +25,38 @@
 
 	}
 
+  if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['dottore']) && isset($_POST['paziente']) && isset($_POST['infermiere']) && isset($_POST['visita']) && isset($_POST['ora_visita']) && isset($_POST['data']) && isset($_POST['ambulatorio'])){
+
+
+    $data = $_POST["data"]." ".$_POST["ora_visita"];
+    $infermiere = explode(" ",$_POST['infermiere'])[0];
+    $paziente = explode(" ",$_POST['paziente'])[0];
+    
+    $db_insert = new DBConfig();
+
+    $db_insert->db_query("INSERT INTO VisitaMedica(Data,NomeAmbulatorio,TipoVisita,TipoPrenotazione,Priorita,CFDottore,CFInfermiere,CFPaziente,CodiceReferto) VALUES ('".$data."','".$_POST['ambulatorio']."',".$_POST['visita'].",0,'".$_POST['priorita']."','".$_POST['dottore']."','".$infermiere."','".$paziente."',NULL)");
+
+   
+
+  }
+
+
+  function get_all_days($month,$cur_day){
+
+    $list = array();
+    $year = 2016;
+    
+    
+    for($d=$cur_day; $d<=31; $d++){
+      $time=mktime(12, 0, 0, $month, $d, $year);          
+      if (date('m', $time)==$month){       
+        $list[]=date('Y-m-d', $time);
+      }
+    }
+
+    return $list;
+
+  }
 
 
 ?>
@@ -70,45 +102,88 @@
 ?>
 
 <form method='POST' action='#'>
-		<div class="form-group row">
-      		<label for="Spec" class="col-sm-2">Specializzazione</label>
-      		<div class="col-sm-10">
-      			<?php echo"<select id='Spec' class='form-control' onchange='mostraDottori(this.value,".$_SESSION['cod_asl'].")'>";
-
-      					echo "<option>-- Seleziona una specializzazione --</option>";
-        			
-
-        				$specs = $db_conn->db_query("SELECT DISTINCT Dottore.Specializzazione FROM Dottore JOIN Informazioni ON Dottore.CodiceFiscale=Informazioni.CodiceFiscale WHERE Informazioni.CodiceASL=".$_SESSION['cod_asl']);
-
-        				for ($i=0; $i < count($specs) ; $i++) { 
-        					$s = $specs[$i];
-        					echo "<option>".$s['Specializzazione']."</option>";
-        				}
-
-
-        			?>
-      			</select>
-      		</div>
-    	</div>
+		
     	<div class="form-group row">
       		<label for="dottore" class="col-sm-2">Dottore</label>
       		<div class="col-sm-10">
-      			<select id="dottore" class="form-control"></select>
+      			<select id="dottore" class="form-control" onchange='get_orari(this.value)' >
+           
+              <option>-</option>
+
+              <?php 
+
+                $dottori = $db_conn->db_query("SELECT Dottore.Specializzazione, Dottore.CodiceFiscale, Informazioni.Nome,Informazioni.Cognome FROM Dottore JOIN Informazioni ON Dottore.CodiceFiscale=Informazioni.CodiceFiscale WHERE Informazioni.CodiceASL=".$_SESSION['cod_asl']);
+
+                for ($i=0; $i < count($dottori) ; $i++) { 
+                  $d = $dottori[$i];
+                  echo "<option>".$d['CodiceFiscale']." - ".$d['Nome']." ".$d['Cognome']." - ".$d['Specializzazione']."</option>";
+                }
+
+
+              ?>
+
+
+            </select>
       		</div>
     	</div>
+      <div class="form-group row">
+          <label for="ora_select" class="col-sm-2">Orari disponibili</label>
+          <div class="col-sm-10">
+            <select name='ora_visita' id="ora_select" class="form-control">
+              
+            </select>
+          </div>
+      </div>
 
+      <div class="form-group row">
+          <label for="date" class="col-sm-2">Data</label>
+          <div class="col-sm-10">
+            <select name='data' id="date" class="form-control" onchange='get_ambulatori(this.value,ora_select.value,dottore.value)'>
+              <?php 
 
-		<div class="form-group row">
-    		<label for="CFPaziente" class="col-sm-2 form-control-label">CF Paziente</label>
+                // ottieni le date disponbili
+                // ottieni le date disponbili
+                $days = get_all_days("06",date("d"));
+
+                echo "<option> - </option>";
+
+                for ($i=0; $i < count($days); $i++) { 
+                  echo "<option>".$days[$i]."</option>";
+                }
+                    
+                if (count($days) < 15){
+                  $days_next_month = get_all_days("07",1);
+                  for ($i=0; $i < count($days_next_month); $i++) { 
+                  echo "<option>".$days_next_month[$i]."</option>";
+                }
+
+                }
+
+              ?>
+            </select>
+          </div>
+      </div>
+      <div class="form-group row">
+          <label for="ambulatorio" class="col-sm-2">Ambulatorio</label>
+          <div class="col-sm-10">
+            <select name='ambulatorio' id="ambulatorio" class="form-control">
+             
+            </select>
+          </div>
+      </div>
+
+		  <div class="form-group row">
+    		<label for="paziente" class="col-sm-2 form-control-label">CF Paziente</label>
     		<div class="col-sm-10">
-      		<input class="form-control" id="CFPaziente" placeholder="Codice Fiscale Paziente">
+      		<input name='paziente' class="form-control" id="paziente" placeholder="Codice Fiscale Paziente">
     		</div>
     	</div>
+      
  		
     	<div class="form-group row">
       		<label for="Infermiere" class="col-sm-2">Infermiere</label>
       		<div class="col-sm-10">
-      			<select id="Infermiere" class="form-control">
+      			<select name='infermiere' id="Infermiere" class="form-control">
         			<?php 
 
         				// ottieni gli infermieri disponibili
@@ -152,57 +227,23 @@
     		<div class="col-sm-10">
       			<div class="radio">
         			<label>
-          			<input type="radio" name="gridRadios" id="controllo" value="option1" />
+          			<input type="radio" name="visita" id="controllo" value="0" />
           			Controllo
         			</label>
       			</div>
       			<div class="radio">
         			<label>
-          			<input type="radio" name="gridRadios" id="visita" value="option2" />
+          			<input type="radio" name="visita" id="visita" value="1" />
           			Visita
         			</label>
       			</div>
 			</div>
   		</div>
+
+
  
- 		<div class="form-group row">
-      		<label for="disabledSelect" class="col-sm-2">Ambulatorio</label>
-      		<div class="col-sm-10">
-      			<select id="disabledSelect" class="form-control">
-        			<?php 
-
-        				// ottieni gli ambulatori disponibili
-
-
-        						echo "<option>$nome_ambulatorio</option>"; 
-
-
-
-
-
-        			?>
-      			</select>
-      		</div>
-    	</div>
-    	<div class="form-group row">
-      		<label for="disabledSelect" class="col-sm-2">Data</label>
-      		<div class="col-sm-10">
-      			<select id="disabledSelect" class="form-control">
-        			<?php 
-
-        				// ottieni le date disponbili
-
-
-        						echo "<option>$nome_ambulatorio</option>"; 
-
-
-
-
-
-        			?>
-      			</select>
-      		</div>
-    	</div>
+ 		
+    	
 
     	<button type="submit" class="btn btn-primary">Inserisci nuova visita</button>
     	
@@ -211,23 +252,44 @@
 
 
 <script type="text/javascript">
-	
-function mostraDottori(specializzazione,cod){
+
+  function get_ambulatori(data,ora,cf){
+
+      
 
       var xhttp = new XMLHttpRequest();
 
-     	xhttp.onreadystatechange = function(){
+      xhttp.onreadystatechange = function(){
 
         if (xhttp.readyState == 4 && xhttp.status == 200){
-          document.getElementById('dottore').innerHTML = xhttp.responseText;
+          document.getElementById('ambulatorio').innerHTML = xhttp.responseText;
         }
+      
       };
-      xhttp.open("GET",'get_dottori.php?s='+specializzazione+'&asl='+cod);
+      
+      xhttp.open("GET",'get_ambulatori_disponibili.php?s='+data+'&o='+ora+'&cf='+cf);
       xhttp.send();
 
   }
 
-  
+  function get_orari(dottore){
+
+      dottore = dottore.split(" ")[0];
+
+      console.log(dottore);
+
+      var xhttp = new XMLHttpRequest();
+
+      xhttp.onreadystatechange = function(){
+
+        if (xhttp.readyState == 4 && xhttp.status == 200){
+          document.getElementById('ora_select').innerHTML = xhttp.responseText;
+        }
+      };
+      xhttp.open("GET",'get_orari.php?d='+dottore);
+      xhttp.send();
+
+  }
 
 
 

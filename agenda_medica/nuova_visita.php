@@ -14,6 +14,21 @@
 
 	}
 
+  if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['dottore']) && isset($_POST['paziente']) && isset($_POST['infermiere']) && isset($_POST['visita']) && isset($_POST['ora_visita']) && isset($_POST['giorno']) && isset($_POST['ambulatorio'])){
+
+
+    $data = $_POST["giorno"]." ".$_POST["ora_visita"];
+    $infermiere = explode(" ",$_POST['infermiere'])[0];
+    $paziente = explode(" ",$_POST['paziente'])[0];
+    
+    $db_insert = new DBConfig();
+
+    $db_insert->db_query("INSERT INTO VisitaMedica(Data,NomeAmbulatorio,TipoVisita,TipoPrenotazione,Priorita,CFDottore,CFInfermiere,CFPaziente,CodiceReferto) VALUES ('".$data."','".$_POST['ambulatorio']."',".$_POST['visita'].",0,'".$_POST['priorita']."','".$_POST['dottore']."','".$infermiere."','".$paziente."',NULL)");
+
+    header("Location: indexdottore.php");
+
+  }
+
   setcookie("cf_dottore",$_SESSION['codice_fiscale'], time()+31536000);
 
 
@@ -63,12 +78,12 @@
 
 	<br /><br />
 
-	<form method='POST' action='#'>
+	<form method='POST' action='nuova_visita.php'>
 
 		<div class="form-group row">
           <label for="paziente" class="col-sm-2">Paziente</label>
           <div class="col-sm-10">
-            <select id="paziente" class="form-control">
+            <select name='paziente' id="paziente" class="form-control">
               <?php 
 
                 $db_conn = new DBConfig();
@@ -90,18 +105,18 @@
             </select>
           </div>
       </div>
- 		<fieldset disabled>
+ 		
     	<div class="form-group row">
     		<label for="CFDottore" class="col-sm-2 form-control-label">CF Dottore</label>
     		<div class="col-sm-10">
-      		<?php echo "<input class='form-control' id='CFDottore' value='".$_SESSION['codice_fiscale']."'>"; ?>
+      		<?php echo "<input name='dottore' class='form-control' id='CFDottore' value='".$_SESSION['codice_fiscale']."' readonly />"; ?>
     		</div>
     	</div>
-    	</fieldset>
+    	
     	<div class="form-group row">
       		<label for="Infermiere" class="col-sm-2">Infermiere</label>
       		<div class="col-sm-10">
-      			<select id="Infermiere" class="form-control">
+      			<select name='infermiere' id="Infermiere" class="form-control">
         			<?php 
 
         				// ottieni gli infermieri disponibili
@@ -153,23 +168,33 @@
     		<div class="col-sm-10">
       			<div class="radio">
         			<label>
-          			<input type="radio" name="gridRadios" id="controllo" value="option1" />
+          			<input type="radio" name="visita" id="controllo" value="0" />
           			Controllo
         			</label>
       			</div>
       			<div class="radio">
         			<label>
-          			<input type="radio" name="gridRadios" id="visita" value="option2" />
+          			<input type="radio" name="visita" id="visita" value="1" />
           			Visita
         			</label>
       			</div>
 			</div>
   		</div>
+      <div class="form-group row">
+          <label for="priorita" class="col-sm-2">Priorità</label>
+          <div class="col-sm-10">
+            <select name='priorita' id="prio" class="form-control">
+              <option>L</option>
+              <option>M</option>
+              <option>H</option>
+            </select>
+          </div>
+      </div>
      
       <div class="form-group row">
           <label for="ora_select" class="col-sm-2">Orari disponibili</label>
           <div class="col-sm-10">
-            <select id="ora_select" class="form-control">
+            <select name='ora_visita' id="ora_select" class="form-control">
               <?php 
 
                 $res1 = $db_conn->db_query("SELECT OraInizio('".$_SESSION['codice_fiscale']."') AS OraInizio");
@@ -195,7 +220,7 @@
           <div class="col-sm-10">
             
 
-            <select id='date-select' class='form-control' onchange='get_ambulatori(this.value,ora_select.value)'>
+            <select name='giorno' id='date-select' class='form-control' onchange='get_ambulatori(this.value,ora_select.value)'>
             <?php   
 
                 // ottieni le date disponbili
@@ -226,7 +251,7 @@
  		<div class="form-group row">
       		<label for="ambulatorio" class="col-sm-2">Ambulatorio</label>
       		<div class="col-sm-10">
-      			<select id="ambulatorio" class="form-control">
+      			<select name='ambulatorio' id="ambulatorio" class="form-control">
         			
       			</select>
       		</div>
