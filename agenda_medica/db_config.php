@@ -52,7 +52,7 @@ class DBConfig
 			$this->db_conn->close();
 			$this->db_conn = null;
 
-		}
+		} 
 
 		return $rows;
 

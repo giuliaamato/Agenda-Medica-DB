@@ -143,7 +143,7 @@
 
                 // ottieni le date disponbili
                 // ottieni le date disponbili
-                $days = get_all_days("06",date("d"));
+                $days = get_all_days(date("m"),date("d"));
 
                 echo "<option> - </option>";
 
@@ -152,7 +152,8 @@
                 }
                     
                 if (count($days) < 15){
-                  $days_next_month = get_all_days("07",1);
+                  $nextmonth = date("m",mktime(0,0,0,date("m")+1,1,date("Y")));
+                  $days_next_month = get_all_days($nextmonth,1);
                   for ($i=0; $i < count($days_next_month); $i++) { 
                   echo "<option>".$days_next_month[$i]."</option>";
                 }

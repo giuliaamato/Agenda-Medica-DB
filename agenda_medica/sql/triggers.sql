@@ -9,22 +9,24 @@ CREATE TRIGGER controlla_visita
  BEGIN
  	DELETE FROM VisitaMedica 
  	WHERE CFDottore=OLD.CodiceFiscale 
- 	AND TipoPrenotazione=1
+ 	AND TipoPrenotazione=0
  END $$
 DELIMITER;
 
-# Trigger che controlla se un dottore è disponibile nell'ora dichiarata
-# nella specifica di una visita quando questa viene inserita nel database
+# Quando una visita medica diventa di tipo "effettuata"(tipoPrenotazione = 1)
+# allora controlla il numero di visite a cui a partecipato l'infermiere (se c'è)
+# e se questo numero è uguale a 4 allora aumenta di 200 lo stipendio.
 DELIMITER $$
-DROP IF EXISTS TRIGGER controlla_orario $$
-CREATE TRIGGER controlla_orario
- BEFORE INSERT ON VisitaMedica
- FOR EACH ROW
- BEGIN
- 	IF NEW.Data > (SELECT Dottore.OraFine FROM Dottore 
- 				   WHERE Dottore.CodiceFiscale=NEW.CFDottore)
- 	THEN
- 		signal sqlstate '45000' set message_text = 'Data oltre orario visite'
- END $$
- DELIMITER;
-
+DROP IF EXISTS TRIGGER premio_infermiere $$
+CREATE TRIGGER premio_infermiere
+BEFORE UPDATE ON VisitaMedica
+FOR EACH ROW
+BEGIN
+	IF conta_visite(OLD.CFInfermiere) = 4
+	THEN 
+	UPDATE Infermiere
+	SET Infermiere.Stipendio = Infermiere.Stipendio+200
+	WHERE Infermiere.CodiceFiscale=OLD.CFInfermiere;
+	END IF;
+END $$
+DELIMITER;

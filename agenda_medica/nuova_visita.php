@@ -14,11 +14,16 @@
 
 	}
 
-  if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['dottore']) && isset($_POST['paziente']) && isset($_POST['infermiere']) && isset($_POST['visita']) && isset($_POST['ora_visita']) && isset($_POST['giorno']) && isset($_POST['ambulatorio'])){
+  if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['dottore']) && isset($_POST['paziente']) && isset($_POST['visita']) && isset($_POST['ora_visita']) && isset($_POST['giorno']) && isset($_POST['ambulatorio'])){
 
 
     $data = $_POST["giorno"]." ".$_POST["ora_visita"];
-    $infermiere = explode(" ",$_POST['infermiere'])[0];
+    if ($_POST['infermiere'] != 'NULL'){
+
+      $infermiere = explode(" ",$_POST['infermiere'])[0];
+
+    }
+    
     $paziente = explode(" ",$_POST['paziente'])[0];
     
     $db_insert = new DBConfig();
@@ -117,6 +122,7 @@
       		<label for="Infermiere" class="col-sm-2">Infermiere</label>
       		<div class="col-sm-10">
       			<select name='infermiere' id="Infermiere" class="form-control">
+              <option>NULL</option>
         			<?php 
 
         				// ottieni gli infermieri disponibili
@@ -224,7 +230,7 @@
             <?php   
 
                 // ottieni le date disponbili
-                $days = get_all_days("06",date("d"));
+                $days = get_all_days(date("m"),date("d"));
 
                 echo "<option> - </option>";
 
@@ -233,7 +239,8 @@
                 }
                     
                 if (count($days) < 15){
-                  $days_next_month = get_all_days("07",1);
+                  $nextmonth = date("m",mktime(0,0,0,date("m")+1,1,date("Y")));
+                  $days_next_month = get_all_days($nextmonth,1);
                   for ($i=0; $i < count($days_next_month); $i++) { 
                   echo "<option>".$days_next_month[$i]."</option>";
                 }

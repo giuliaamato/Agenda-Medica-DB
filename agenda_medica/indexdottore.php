@@ -135,7 +135,7 @@
 
 		<?php
 
-			
+			$db_conn->db_query("UPDATE VisitaMedica SET VisitaMedica.TipoPrenotazione=1 WHERE VisitaMedica.Data < CURDATE()");
 
 			$rows = $db_conn->db_query("SELECT * FROM VisitaMedica AS VM WHERE VM.CFDottore='".$cod_fiscale."';");
 
@@ -184,7 +184,7 @@
 						if (isset($v['CodiceReferto'])){
 							echo "<td><form method='GET' action='info_referto.php'><input type='hidden' name='cod_referto' value='".$v['CodiceReferto']."'/><button class='btn btn-primary'>Referto n.".$v['CodiceReferto']."</button></form></td>";
 						} else {
-							echo "<td>Referto non disponibile</td>";
+							echo "<td><form method='POST' action='nuovo_referto.php'><input type='hidden' name='visita' value=".$v['CodiceVisita']." /><button class='btn btn-success'>Aggiungi referto</button></form></td>";
 						}
 					
 						
