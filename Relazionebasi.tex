@@ -3,12 +3,13 @@
 
 \begin{document}
 
-\title{Progetto di Basi di Dati}
-\author{Giulia Amato, matr. 1075626  Paolo Broglio, matr. XXXXXX}
+\title{\textbf{Progetto di Basi di Dati}}
+\author{Giulia Amato, matricola 1075626
+\\Paolo Broglio, matricola XXXXXX}
 \date{06/2016}
-
+\maketitle
 \section*{Abstract}
-Il progetto modella la gestione delle visite mediche relative ad un'agenda medica per le principali ASL del territorio Veneto. In particolare, tale agenda potrà essere visualizzata da tre tipi di utenti che potranno effettuare delle operazioni tipiche grazie all'utilizzo di un proprio account:
+Il progetto modella la gestione delle visite mediche relative ad un'agenda medica per le principali ASL del territorio Veneto. In particolare, tale agenda potrà essere visualizzata da tre tipi di utenti grazie all'interfaccia web. Essi potranno effettuare delle operazioni tipiche attraverso l'utilizzo di un proprio account:
 \begin{enumerate}
 \item  Dottori, che hanno la possibilità di creare dei referti e di visualizzarli, visualizzare le visite mediche secondo una tale data e le informazioni dei pazienti
 \item Amministratori, che gestiscono la parte amministrativa. Aggiungono nuovi dottori o infermieri, ma possono anche modificarne i dati o eliminarli
@@ -17,26 +18,35 @@ Il progetto modella la gestione delle visite mediche relative ad un'agenda medic
 
 
 \section*{Descrizione dei requisiti}
-Si vuole realizzare una base di dati che contenga e gestisca le informazioni relative ad un'agenda medica per la gestione delle visite mediche, ed in particolare si vogliono conoscere: dati relativi allo svolgimento della visita medica, dati relativi al paziente e al medico, ed inoltre dati relativi alla ASL di appartenenza. Per ordine, una data visita medica è identificata dalle seguenti informazioni:
+Il progetto in esame vuole analizzare una base di dati che contenga e gestisca le informazioni relative ad un'agenda medica per la gestione delle visite mediche, ed in particolare si vogliono conoscere:
+\begin{enumerate}
+ \item dati relativi allo svolgimento della visita medica
+ \item dati relativi al paziente
+ \item dati relativi al dottore
+ \item dati relativi all'infermiere
+ \item dati relativi alla ASL di appartenenza.
+ \end{enumerate} 
+
+ Per ordine, una \textbf{visita medica} è identificata dalle seguenti informazioni:
 \begin{itemize}
 \item Un codice, che la identifica univocamente
 \item Una data
 \item Un'ora
 \item Una priorità con la quale si potranno eventualmente ordinare le visite
 \end{itemize}
-Una visita potrà dunque rientrare in due stati (effettuata o prenotata), ed inoltre tale visita potrà essere descritta come visita di controllo o come visita medica. Al termine di una visita sarà prodotto un referto, dotato di codice che lo identifica univocamente e un testo che descrive l'avvenuta visita. Ogni visita verrà svolta in un certo ambulatorio contenuta in una data ASL del territorio del Veneto, tale ASL sarà identificata da un codice univoco, e avrà altri dati significativi quali indirizzo e contatti (email e telefono). Inoltre, la gestione delle prenotazioni di visite mediche per ogni ASL verrà effettuata dal CUP (Centro Unico Prenotazioni), il quale è identificato da un codice univoco e da una password. Ad ogni ASL afferiscono un certo numero di dottori e infermieri, nonché amministratori di sistema. L'amministratore e il dottore avranno accesso al database per la gestione delle visite, perciò verranno identificati da:
+Una visita potrà dunque rientrare in due stati (\textit{effettuata} o \textit{prenotata}), ed inoltre una visita potrà essere descritta come \textit{visita di controllo} o come \textit{visita medica}. Al termine di una visita sarà prodotto un \textbf{referto}, dotato di \textit{codice} che lo identifica univocamente e un \textit{testo} che descrive l'avvenuta visita. Ogni visita verrà svolta in un certo \textbf{ambulatorio} contenuto in una data \textbf{ASL} del territorio del Veneto. Una \textbf{ASL} sarà identificata da un \textit{codice} univoco, e avrà altri dati significativi quali \textit{indirizzo} e \textit{contatti} (email e telefono). Inoltre, la gestione delle prenotazioni di visite mediche per ogni \textbf{ASL} verrà effettuata dal \textbf{CUP} (\textit{Centro Unico Prenotazioni}), il quale è identificato da un \textit{codice} univoco e da una \textit{password}, che verranno usati per accedere nella base di dati nell'interfaccia web. Ad ogni \textbf{ASL} afferiscono un certo numero di \textbf{dottori} e \textbf{infermieri}, nonché \textbf{amministratori di sistema}. L'\textbf{amministratore} e il \textbf{dottore} avranno accesso al database per la gestione delle visite, perciò verranno identificati da:
 \begin{itemize}
 \item Un nome utente, univoco
 \item Una password
 \item Una data di scadenza della password, che dovrà essere rinnovata 
 \item Uno stipendio
 \end{itemize}
-Per quanto riguarda il dottore è molto importante essere a conoscenza di dati aggiuntivi quali:
+Per quanto riguarda il \textbf{dottore} è molto importante essere a conoscenza di dati aggiuntivi quali:
 \begin{itemize}
 \item La specializzazione, affinché le visite di una certa impronta possano essere indirizzate ai dottori competenti su quel settore
 \item Orario di inizio e fine turni di lavoro, importante per l'inserimento delle visite in un dato range di tempo
 \end{itemize}
-Per quanto riguarda l'infermiere, anch'esso avrà come dati significativi lo stipendio, ma anche l'attributo tirocinante. Tali categorie di utenza avranno tutte una serie di informazioni che caratterizzano un singolo individuo:
+Per quanto riguarda l'\textbf{infermiere}, anch'esso avrà come dati significativi lo \textit{stipendio}, ma anche l'attributo \textit{tirocinante}, che identifica la qualifica di un dato infermiere. Tali categorie di utenza avranno tutte una serie di informazioni che caratterizzano un singolo individuo:
 \begin{itemize}
 \item Un codice fiscale, che identifica univocamente un utente
 \item Un nome ed un cognome
@@ -46,7 +56,7 @@ Per quanto riguarda l'infermiere, anch'esso avrà come dati significativi lo sti
 \item Indirizzo, con via e civico
 \item Città di nascita e città di residenza
 \end{itemize}
-Ogni città ha inoltre un nome univoco, una provincia, un CAP e una regione, anch'essa con un nome univoco. 
+Ogni \textbf{città} ha inoltre un \textit{nome univoco}, una \textit{provincia}, un \textit{CAP} e una \textit{regione}, anch'essa con un \textit{nome univoco}. 
 
 \section*{Progettazione concettuale}
 \subsection*{Lista delle classi}
@@ -145,7 +155,7 @@ modella le visite mediche
 \subsection*{Lista delle associazioni}
 
 \begin{center}
-\textbf{UTENTE-CITTA’:}\textit{ è nato in}
+\textbf{UTENTE-CITTA’:}\textit{è nato in}
 \end{center}
 Ogni utente ha una e una sola città di nascita. Una città può avere 0 o più persone nate in quella città.
 Molteplicità 1:N
@@ -210,17 +220,97 @@ Ogni paziente può prendere parte di nessuna visita medica, o al più N. Una vis
 Molteplicità: 1:N
 
 \begin{center}
-\textbf{DOTTORE-VISITA MEDICA}: \textit{tenura da }
+\textbf{DOTTORE-VISITA MEDICA}: \textit{tenuta}
 \end{center}
 Ogni visita medica è tenuta da uno ed un solo dottore, mentre un dottore può tenere 0 o N visite mediche.
 Molteplicità: 1:N
 
 
 \section*{Progettazione logica}
-La gerarchia della classe Utenti è stata tradotta tramite partizionamento *** dato che *******
+La generalizzazione della classe Utente è stata tradotta tramite sostituzione della generalizzazione con associazioni dato che gli altri due metodi (accorpamento delle figlie della generalizzazione nel genitore, e accorpamento del genitore della generalizzazione nelle figlie) avrebbe appesantito la specificità delle varie entità, provocando diversi svantaggi. Con la sostituzione con associazioni, invece, la generalizzazione si trasforma in associazioni 1 a 1 che legano rispettivamente l'entità genitore con le entità figlie. Non ci sono trasferimenti di attributi.
 Viene dunque eliminata la classe Utente. La gerarchia completa viene quindi ridotta alle seguenti classi:
 
-***DA COMPLETARE***
+
+***
+\subsection*{Associaizoni}
+\begin{center}
+\textbf{DATI - CITTA':} \textit{residenza}
+\end{center} 
+Ogni utente è residente di una sola città, mentre una città può avere da 0 a N residenti. La molteplicità è 1 - N.
+
+
+\begin{center}
+\textbf{DATI - CITTA':} \textit{nascita}
+\end{center} 
+
+Ogni utente è nato di una sola città, mentre una città può avere da 0 a N nati nel proprio territorio. La molteplicità è 1 - N.
+
+
+\begin{center}
+\textbf{DATI - ADMIN:} \textit{informazioni}
+\end{center} 
+Un utente può essere o non essere un admin, mentre un admin è sicuramente un utente. La molteplicità è 1 - 1.
+
+
+\begin{center}
+\textbf{DATI - PAZIENTE:} \textit{informazioni}
+\end{center} 
+Un utente può essere o non essere un paziente, mentre un paziente è sicuramente un utente. La molteplicità è 1 - 1.
+
+
+\begin{center}
+\textbf{DATI - INFERMIERE:} \textit{informazioni}
+\end{center} 
+Un utente può essere o non essere un infermiere, mentre un infermiere è sicuramente un utente. La molteplicità è 1 - 1.
+
+
+\begin{center}
+\textbf{DATI - DOTTORE:} \textit{informazioni}
+\end{center} 
+Un utente può essere o non essere un dottore, mentre un dottore è sicuramente un utente. La molteplicità è 1 - 1.
+
+
+\begin{center}
+\textbf{DATI - ASL:} \textit{afferisce}
+\end{center}
+Un utente può afferire ad una e una sola ASL, mentre una ASL può avere da 1 a più utenti. La molteplicità è 1 - N. 
+****MANCA MOLTEPLICITA SU SCHEMA LOGICO****
+
+\begin{center}
+\textbf{CITTA' - ASL:} \textit{sede}
+\end{center} 
+Un città può essere o non essere sede di una ASL, considerando i piccoli comuni. Mentre una ASL ha sicuramente una sede in una città. La molteplicità è 1 - 1.
+
+\begin{center}
+\textbf{ASL - CUP:} \textit{gestione}
+\end{center} 
+Le prenotazioni per una ASL  vengono gestite da uno e un solo CUP, e un CUP può gestire una e una sola ASL. La molteplicità è 1 - 1.
+
+
+\begin{center}
+\textbf{DOTTORE - VISITA MEDICA:} \textit{organizzazione}
+\end{center} 
+Un dottore può effettuare una o più visite mediche, mentre una visita medica è sicuramente svolta da un dottore. La molteplicità è N - 1.
+
+
+\begin{center}
+\textbf{VISITA MEDICA - REFERTO:} \textit{esito}
+\end{center} 
+Un visita medica può produrre o meno un referto , mentre un referto appartiene sicuramente ad un unica visita. La molteplicità è 1 - 1.
+
+
+\begin{center}
+\textbf{PAZIENTE - VISITA MEDICA:} \textit{visitato}
+\end{center} 
+Un paziente presente nella base dati può essere stato visitato N volte, o può ancora non essere stato visitato. 	Mentre una visita medica riguarda uno ed un solo paziente. La molteplicità è N - 1.
+
+
+\begin{center}
+\textbf{INFERMIERE - VISITA MEDICA:} \textit{aiuto}
+\end{center} 
+Una visita medica può avere o meno un infermiere che appoggia il dottore, e una infermiere può essere di aiuto in 0 o N visite mediche. La molteplicità è 1 - N.  (****controllare perché nella base dati inserire l'infermiere è obbligatorio****)
+
+
 
 \section*{Implementazione della base di dati}
 Qui di seguito verrà riportato il codice relativo alla base di dati. Verranno definite le tabelle: 
