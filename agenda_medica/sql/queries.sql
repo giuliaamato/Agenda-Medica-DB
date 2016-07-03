@@ -4,18 +4,19 @@
 # in cui la priorità delle visite e’ al livello minore (L), 
 # e il massimo numero di visite mediche effettuate da un dottore, 
 # in cui la priorità delle visite e’ al livello maggiore (H) 
-SELECT MAX(VisiteEffettuate) 
-FROM (SELECT VM.CFinfermiere, VM.CFdottore, COUNT(*) VisiteEffettuate 
+#SELECT MAX(VisiteEffettuate), 
+SELECT MAX(VisiteEffettuate) AS Visite, T.CFInfermiere AS CodiceFiscale
+FROM (SELECT VM.CFInfermiere, VM.CFDottore, COUNT(*) VisiteEffettuate 
 FROM Infermiere i, VisitaMedica VM 
-WHERE i.Tirocinante = 1 AND VM.CFinfermiere = i.CodiceFiscale 
-GROUP BY VM.CFinfermiere, VM.CFdottore ) AS T 
-UNION SELECT MAX(VisiteEffettuate) 
-FROM (SELECT VM.CFdottore, COUNT(*) VisiteEffettuate 
+WHERE i.Tirocinante = 1 AND VM.CFInfermiere = i.CodiceFiscale 
+GROUP BY VM.CFInfermiere, VM.CFDottore ) AS T 
+UNION SELECT MAX(VisiteEffettuate), T2.CFDottore 
+FROM (SELECT VM.CFDottore, COUNT(*) VisiteEffettuate 
 FROM VisitaMedica VM WHERE VM.TipoPrenotazione = 1 
-AND VM.Priorita = 'L' GROUP BY VM.CFdottore ) AS T2 
-UNION SELECT MAX(VisiteEffettuate) FROM 
-(SELECT VM.CFdottore, COUNT(*) VisiteEffettuate FROM VisitaMedica VM 
-WHERE VM.TipoPrenotazione = 1 AND VM.Priorita = 'H' GROUP BY VM.CFdottore ) AS T3
+AND VM.Priorita = 'L' GROUP BY VM.CFDottore ) AS T2 
+UNION SELECT MAX(VisiteEffettuate), T3.CFDottore FROM 
+(SELECT VM.CFDottore, COUNT(*) VisiteEffettuate FROM VisitaMedica VM 
+WHERE VM.TipoPrenotazione = 1 AND VM.Priorita = 'H' GROUP BY VM.CFDottore ) AS T3
 
 
 # Query che, dati i codici fiscali dei dottori che non hanno mai fatto 
@@ -23,14 +24,14 @@ WHERE VM.TipoPrenotazione = 1 AND VM.Priorita = 'H' GROUP BY VM.CFdottore ) AS T
 # il codice fiscale e lo stipendio di questi dottori, 
 # selezionando coloro che hanno la data scadenza dell’account 
 # tra il 1 Gennaio 2016 e il 1 Ottobre 2016, il cui stipendio e’ 
-# maggiore di 3000, il nome utente comprende una ca_ 
+# maggiore di 30000, il nome utente comprende una ca_ 
 # (con _ si intente un qualsiasi carattere), e con l’orario di 
 # inizio del turno del lavoro compreso tra le 9 e le 13, 
 # e il turno di fine compreso tra le 13 e le 15.45
 SELECT D.NomeUtente, D.CodiceFiscale, Doct.Stipendio
 FROM DatiAccesso D JOIN Dottore Doct
 ON D.CodiceFiscale = Doct.CodiceFiscale AND D.DataScadenza BETWEEN "2016-01-01" AND "2016-10-01"
-AND Doct.Stipendio>3000 AND D.NomeUtente LIKE "%ca_%" AND Doct.OraInizio BETWEEN "9:00:00" AND "13:30:00"
+AND Doct.Stipendio>30000 AND D.NomeUtente LIKE "%ca_%" AND Doct.OraInizio BETWEEN "9:00:00" AND "13:30:00"
 AND Doct.OraFine BETWEEN "13:00:00" AND "15:45:00" AND Doct.CodiceFiscale 
 NOT IN (SELECT VM.CFDottore FROM VisitaMedica VM, Informazioni I 
 WHERE VM.CFdottore=I.CodiceFiscale)
@@ -53,11 +54,12 @@ GROUP BY VM.CFdottore
 # infermieri tirocinanti uomini nati in una data posteriore al 1 Gennaio 1970, 
 # e di ottenere il codice della ASL con il maggior numero di infermiere tirocinanti 
 # donne, nate anch’esse in una data posteriore a quella già espressa
-SELECT MAX(T1.CountInf) Num_Tirocinanti  FROM (SELECT COUNT(Infermiere.CodiceFiscale) 
+
+SELECT T1.CodiceASL, MAX(T1.CountInf) FROM (SELECT COUNT(Infermiere.CodiceFiscale) 
 AS CountInf,Informazioni.CodiceASL FROM Infermiere JOIN Informazioni 
 ON Infermiere.CodiceFiscale=Informazioni.CodiceFiscale WHERE Infermiere.Tirocinante=1 
 AND CAST(Informazioni.DataNascita as date)>1970-01-01 AND Informazioni.Sesso='M' 
-GROUP BY Informazioni.CodiceASL) T1 UNION SELECT MAX(T2.CountInf) Num_Tirocinanti 
+GROUP BY Informazioni.CodiceASL) T1 UNION SELECT T2.CodiceASL, MAX(T2.CountInf)
 FROM (SELECT COUNT(Infermiere.CodiceFiscale) AS CountInf,Informazioni.CodiceASL 
 FROM Infermiere JOIN Informazioni ON Infermiere.CodiceFiscale=Informazioni.CodiceFiscale 
 WHERE Infermiere.Tirocinante=1 AND CAST(Informazioni.DataNascita as date)>1970-01-01 

@@ -123,6 +123,7 @@
         echo "<table class='table'>";
         echo "<tr>";
         echo "<th>Data/Ora visita</th>";
+        echo "<th>Priorità</th>";
         echo "<th>Paziente</th>";
         echo "<th>Infermiere</th>";
         echo "<th>Referto</th>";
@@ -135,6 +136,7 @@
           echo "<tr>";
 
           echo "<td>".$v['Data']."</td>";
+          
 
           if (isset($v['CFPaziente'])){
             echo "<td><form action='info_paziente.php' method='GET'><input type='hidden' name='cf_paziente' value='".$v['CFPaziente']."'/><button class='btn btn-primary'>".$v['CFPaziente']."</button></form></td>";

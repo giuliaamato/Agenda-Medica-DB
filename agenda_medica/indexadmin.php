@@ -54,7 +54,7 @@
 <!doctype html>
 <html>
 <head>
-    <title></title>
+    <title>Pannello Admin</title>
 
     <meta charset="utf-8" />
     <meta http-equiv="Content-type" content="text/html; charset=utf-8" />
@@ -89,6 +89,7 @@
 	echo "<h1>Amministrazione ASL di ".$info_ASL['CittaSede']."</h1>";
 	
 ?>
+	<a class='btn btn-primary' href="info_utili.php" >Informazioni generali</a>
 
 	<h2>Dottori</h2>
 

@@ -129,23 +129,27 @@
 
   	<br />
 
-	
-
-		
+		<h2>Visite prenotate</h2>
+		<button class="btn btn-success" onClick="sortBirthday('<?php echo $_SESSION['codice_fiscale']; ?>')">Ordina per data di nascita</button>
+		<button class="btn btn-success" onClick="sortPriority('<?php echo $_SESSION['codice_fiscale']; ?>')">Ordina per priorità</button>
+		<br /><br />
+		<table id='visite-prenotate' class='table table-bordered'>
+		<tr>
+				<th>Data Visita</th>
+				<th>Priorità</th>
+				<th>Ambulatorio</th>
+				<th>Paziente</th>
+				<th>Azione</th>
+		</tr>
 
 		<?php
 
-			$db_conn->db_query("UPDATE VisitaMedica SET VisitaMedica.TipoPrenotazione=1 WHERE VisitaMedica.Data < CURDATE()");
+			//$db_conn->db_query("UPDATE VisitaMedica SET VisitaMedica.TipoPrenotazione=1 WHERE VisitaMedica.Data < CURDATE()");
 
 			$rows = $db_conn->db_query("SELECT * FROM VisitaMedica AS VM WHERE VM.CFDottore='".$cod_fiscale."';");
 
 
 			if (count($rows)>0){
-
-				echo "<h2>Visite prenotate</h2>";
-
-				echo "<table class='table table-bordered'>";
-				echo "<tr><th>Data Visita</th><th>Ambulatorio</th><th>Paziente</th><th>Azione</th></tr>";
 
 
 
@@ -157,6 +161,7 @@
 
 						echo "<tr>";
 						echo "<td>".$v['Data']."</td>";
+						echo "<td>".$v['Priorita']."</td>";
 						echo "<td>".$v['NomeAmbulatorio']."</td>";
 						echo "<td><form method='GET' action='info_paziente.php'><input type='hidden' name='cf_paziente' value='".$v['CFPaziente']."'/><button class='btn btn-primary'>".$v['CFPaziente']."</button></form></td>";
 						echo "<td><form method='POST' action='indexdottore.php'><input type='hidden' name='codice_visita' value='".$v['CodiceVisita']."' /><button class='btn btn-danger'>Cancella</button></form></td>";
@@ -169,7 +174,13 @@
 
 				echo "<h2>Visite effettuate</h2>";
 				echo "<table class='table table-bordered'>";
-				echo "<tr><th>Data Visita</th><th>Ambulatorio</th><th>Paziente</th><th>Referto</th></tr>";
+				echo "<tr>
+				<th>Data Visita</th>
+				<th>Priorita</th>
+				<th>Ambulatorio</th>
+				<th>Paziente</th>
+				<th>Referto</th>
+				</tr>";
 
 				for ($i=0; $i < count($rows) ; $i++) { 
 
@@ -179,6 +190,7 @@
 
 						echo "<tr>";
 						echo "<td>".$v['Data']."</td>";
+						echo "<td>".$v['Priorita']."</td>";
 						echo "<td>".$v['NomeAmbulatorio']."</td>";
 						echo "<td><form method='GET' action='info_paziente.php'><input type='hidden' name='cf_paziente' value='".$v['CFPaziente']."'/><button class='btn btn-primary'>".$v['CFPaziente']."</button></form></td>";
 						if (isset($v['CodiceReferto'])){
@@ -243,6 +255,44 @@
 
 
 </div>
+<script>
+	function sortBirthday(cf_dottore){
+
+	  console.log(cf_dottore);
+
+      var xhttp = new XMLHttpRequest();
+
+      xhttp.onreadystatechange = function(){
+
+        if (xhttp.readyState == 4 && xhttp.status == 200){
+          document.getElementById('visite-prenotate').innerHTML = xhttp.responseText;
+        }
+      };
+
+      xhttp.open("GET",'sort_nascita.php?cf='+cf_dottore);
+      xhttp.send();
+
+  }
+
+  function sortPriority(cf_dottore){
+
+	  console.log(cf_dottore);
+
+      var xhttp = new XMLHttpRequest();
+
+      xhttp.onreadystatechange = function(){
+
+        if (xhttp.readyState == 4 && xhttp.status == 200){
+          document.getElementById('visite-prenotate').innerHTML = xhttp.responseText;
+        }
+      };
+
+      xhttp.open("GET",'sort_priority.php?cf='+cf_dottore);
+      xhttp.send();
+
+  }
+ 
+ </script>
 <script src="//code.jquery.com/jquery-1.11.0.min.js"></script>
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js" integrity="sha384-0mSbJDEHialfmuBBQP6A4Qrprq5OVfW37PRR3j5ELqxss1yVqOtnepnHVP9aJ7xS" crossorigin="anonymous"></script>
 </body>
