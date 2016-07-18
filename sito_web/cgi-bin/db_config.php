@@ -6,9 +6,9 @@
 class DBConfig
 {
 	private $db_server = "localhost";
-	private $db_password = "e4wYK8na";
-	private $db_username = "pbroglio";
-	private $db_name = "pbroglio-PR";
+	private $db_password = "";
+	private $db_username = "";
+	private $db_name = "ProgettoDataBase";
 
 	private $db_conn = null;
 

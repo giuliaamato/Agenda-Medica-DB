@@ -10,6 +10,11 @@ SET FOREIGN_KEY_CHECKS=0;
 ###########################################################
 ###########################################################
 
+# CREATE DB
+DROP DATABASE IF EXISTS ProgettoDataBase;
+CREATE DATABASE ProgettoDataBase;
+USE ProgettoDataBase;
+
 # CREATE TABLES
 CREATE TABLE Informazioni (
 
@@ -8887,15 +8892,15 @@ GROUP BY VM.CFdottore;
 # e di ottenere il codice della ASL con il maggior numero di infermiere tirocinanti 
 # donne, nate anch’esse in una data posteriore a quella già espressa
 
-CREATE VIEW tirocinanti AS SELECT MAX(T1.CountInf) AS conta FROM (SELECT COUNT(Infermiere.CodiceFiscale) 
-AS CountInf,Informazioni.CodiceASL FROM Infermiere JOIN Informazioni 
-ON Infermiere.CodiceFiscale=Informazioni.CodiceFiscale WHERE Infermiere.Tirocinante=1 
-AND CAST(Informazioni.DataNascita as date)>1970-01-01 AND Informazioni.Sesso='M' 
-GROUP BY Informazioni.CodiceASL) T1 UNION SELECT MAX(T2.CountInf) AS conta
-FROM (SELECT COUNT(Infermiere.CodiceFiscale) AS CountInf,Informazioni.CodiceASL 
-FROM Infermiere JOIN Informazioni ON Infermiere.CodiceFiscale=Informazioni.CodiceFiscale 
-WHERE Infermiere.Tirocinante=1 AND CAST(Informazioni.DataNascita as date)>1970-01-01 
-AND Informazioni.Sesso='F' GROUP BY Informazioni.CodiceASL) T2;
+#CREATE VIEW tirocinanti AS SELECT MAX(T1.CountInf) AS conta FROM (SELECT COUNT(Infermiere.CodiceFiscale) 
+#AS CountInf,Informazioni.CodiceASL FROM Infermiere JOIN Informazioni 
+#ON Infermiere.CodiceFiscale=Informazioni.CodiceFiscale WHERE Infermiere.Tirocinante=1 
+#AND CAST(Informazioni.DataNascita as date)>1970-01-01 AND Informazioni.Sesso='M' 
+#GROUP BY Informazioni.CodiceASL) T1 UNION SELECT MAX(T2.CountInf) AS conta
+#FROM (SELECT COUNT(Infermiere.CodiceFiscale) AS CountInf,Informazioni.CodiceASL 
+#FROM Infermiere JOIN Informazioni ON Infermiere.CodiceFiscale=Informazioni.CodiceFiscale 
+#WHERE Infermiere.Tirocinante=1 AND CAST(Informazioni.DataNascita as date)>1970-01-01 
+#AND Informazioni.Sesso='F' GROUP BY Informazioni.CodiceASL) T2;
 
 
 # Query che restituisce nome, cognome, codice dell’ASL di 
